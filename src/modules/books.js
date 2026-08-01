@@ -1,15 +1,79 @@
-const url = "https://openlibrary.org/search.json?q=test";
-const headers = new Headers({
+const URL = "https://openlibrary.org/search.json?lang=es";
+const HEADERS = new Headers({
     "User-Agent": "BibliotecaPrivadaAitor/1.0 (aitorlevi@gmail.com)",
 });
-const options = {
+const OPTIONS = {
     method: "GET",
-    headers: headers,
+    headers: HEADERS,
 };
 
-export function getBooks() {
-    fetch(url, options)
-        .then((response) => console.log(response.json()))
-        .then((data) => console.log(data))
-        .catch((error) => console.error("Error:", error));
+export class Book {
+    constructor(title, author, isbn = null, cover = null, year = null) {
+        this.id = crypto.getRandomValues();
+        this.title = title;
+        this.author = author;
+        this.cover = cover;
+        this.year = year;
+        this.status = null;
+        this.rating = null;
+        this.dataAdded = new Date().toISOString();
+    }
+
+    changeStatus(newStatus) {
+        const status = [null, "pending", "inProgress", "read"];
+        if (!status.includes(newStatus)) {
+            throw new Error(`Estado incorrecto`);
+        }
+        this.status = newStatus;
+    }
+
+    rate(newRate) {
+        if (typeof newRate != Number || newRate < 1 || newRate > 10) {
+            throw new Error(`Valoración incorrecta`);
+        }
+        this.rating = newRate;
+    }
+
+    static validate({ title, author }) {
+        if (!title && title.trim === "") {
+            throw new Error(`Título incorrecto`);
+        }
+        if (!author && author.trim === "") {
+            throw new Error(`Autor incorrecto`);
+        }
+    }
+
+    static createFromOpenLibrary(data) {
+        return new Book({
+            title: data.title,
+            author: data.author_name?.[0] ?? "Autor desconocido",
+            isbn: data.isbn?.[0] ?? null,
+            cover: data.cover_i
+                ? `https://covers.openlibrary.org/b/id/${dataCruda.cover_i}-M.jpg`
+                : null,
+            year: data.first_publish_year ?? null,
+        });
+    }
+}
+
+export async function getBooks() {
+    try {
+        const response = await fetch(URL, OPTIONS);
+
+        if (!response.ok) {
+            throw new Error(`Error en la petición ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        data.docs.forEach((libro, index) => {
+            console.log(`${index + 1}. Título: ${libro.title}`);
+            console.log(
+                `   Autor: ${libro.author_name ? libro.author_name.join(", ") : "Desconocido"}`,
+            );
+            console.log(`   Año: ${libro.first_publish_year || "N/A"}\n`);
+        });
+    } catch (error) {
+        console.error("Hubo un problema con la búsqueda:", error);
+    }
 }
