@@ -1,11 +1,5 @@
-const URL = "https://openlibrary.org/search.json?lang=es";
-const HEADERS = new Headers({
-    "User-Agent": "BibliotecaPrivadaAitor/1.0 (aitorlevi@gmail.com)",
-});
-const OPTIONS = {
-    method: "GET",
-    headers: HEADERS,
-};
+const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
+const API_KEY = "AIzaSyAeL3HjPxSFe2CdJOKdTTNN3yk_DZtp2yw";
 
 export class Book {
     constructor(title, author, isbn = null, cover = null, year = null) {
@@ -56,9 +50,10 @@ export class Book {
     }
 }
 
-export async function getBooks() {
+export async function searchBooks(title) {
+    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&key=${API_KEY}`;
     try {
-        const response = await fetch(URL, OPTIONS);
+        const response = await fetch(url);
 
         if (!response.ok) {
             throw new Error(`Error en la petición ${response.status}`);
@@ -66,13 +61,7 @@ export async function getBooks() {
 
         const data = await response.json();
 
-        data.docs.forEach((libro, index) => {
-            console.log(`${index + 1}. Título: ${libro.title}`);
-            console.log(
-                `   Autor: ${libro.author_name ? libro.author_name.join(", ") : "Desconocido"}`,
-            );
-            console.log(`   Año: ${libro.first_publish_year || "N/A"}\n`);
-        });
+        return data.docs;
     } catch (error) {
         console.error("Hubo un problema con la búsqueda:", error);
     }
