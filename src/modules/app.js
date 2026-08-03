@@ -15,7 +15,7 @@ form.addEventListener("submit", async (e) => {
 });
 
 async function testBooks() {
-    const books = await searchBooks("el senior de los anillos");
+    const books = await searchBooks("el principito");
     console.log(books);
 
     printBooks(books);

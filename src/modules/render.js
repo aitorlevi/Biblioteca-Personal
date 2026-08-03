@@ -3,18 +3,14 @@ export function printBooks(books) {
 
     container.innerHTML = books
         .map((book) => {
-            let cover = book.cover_i
-                ? `https://covers.openlibrary.org/b/id/${book.cover_i}-M.jpg`
-                : "/public/images/image-not-found.png";
+            const bookData = book.volumeInfo;
             return `<article class="libro-card">
-                    <img src="${cover}" alt="${book.title}" />
-                    <h3>${book.title}</h3>
-                    <p>${book.author}</p>
+                    <img src="${bookData.imageLinks.thumbnail}" alt="${bookData.title}" />
+                    <h3>${bookData.title}</h3>
+                    <h4>${bookData.subtitle}</h4>
+                    
                     <button
-                        data-titulo="${book.title}"
-                        data-autor="${book.author}"
-                        data-isbn="${book.isbn ?? ""}"
-                        data-portada="${book.cover_i ?? ""}"
+                        data-titulo="${bookData.title}"
                     >
                         Añadir a mi biblioteca
                     </button>

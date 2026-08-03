@@ -61,7 +61,7 @@ export async function searchBooks(title) {
 
         const data = await response.json();
 
-        return data.docs;
+        return data.items;
     } catch (error) {
         console.error("Hubo un problema con la búsqueda:", error);
     }
