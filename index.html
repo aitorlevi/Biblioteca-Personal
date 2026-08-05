@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Biblioteca privada</title>
         <link rel="stylesheet" href="styles/main.css" />
-        <script type="module" src="src/modules/config.js"></script>
         <script type="module" src="src/modules/app.js"></script>
     </head>
     <body>
@@ -13,16 +12,25 @@
             <h1>Biblioteca privada</h1>
         </header>
         <main>
-            <section>
-                <article>
-                    <form action="" id="formSearch">
-                        <label for="title">Titulo:</label>
-                        <input type="text" id="title" name="title" />
-                        <button type="submit">Buscar</button>
-                    </form>
-                </article>
+            <section id="form">
+                <form action="" id="formSearch" class="form-container">
+                    <label for="title">Titulo:</label>
+                    <input type="text" id="title" name="title" />
+                    <button type="submit">Buscar</button>
+                </form>
             </section>
-            <section id="searchResult"></section>
+            <section id="searchResult" class="book-wrapper">
+                <!-- <article class="book-card">
+                    <img
+                        src="http://books.google.com/books/content?id=vQtNBAAAQBAJ&amp;printsec=frontcover&amp;img=1&amp;zoom=1&amp;edge=curl&amp;source=gbs_api"
+                        class="book-card__image"
+                        alt="El Principito"
+                    />
+                    <h3 class="book-card__title">El Principito</h3>
+                    <h4 class="book-card__subtitle">Le Petit Prince</h4>
+                    <h4 class="book-card__author">book-card__author</h4>
+                </article> -->
+            </section>
         </main>
         <footer></footer>
     </body>

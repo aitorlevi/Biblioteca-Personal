@@ -9,16 +9,6 @@ form.addEventListener("submit", async (e) => {
     const title = formData.get("title");
 
     const books = await searchBooks(title);
-    console.log(books);
 
     printBooks(books);
 });
-
-async function testBooks() {
-    const books = await searchBooks("el principito");
-    console.log(books);
-
-    printBooks(books);
-}
-
-await testBooks();
