@@ -1,5 +1,5 @@
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
-const API_KEY = "AIzaSyAeL3HjPxSFe2CdJOKdTTNN3yk_DZtp2yw";
+import { API_KEY } from "./config.js";
 
 export class Book {
     constructor(title, author, isbn = null, cover = null, year = null) {
@@ -51,7 +51,7 @@ export class Book {
 }
 
 export async function searchBooks(title) {
-    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&key=${API_KEY}`;
+    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&langRestrict=es&key=${API_KEY}`;
     try {
         const response = await fetch(url);
 
