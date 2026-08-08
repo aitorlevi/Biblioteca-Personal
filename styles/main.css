@@ -4,6 +4,7 @@
     box-sizing: border-box;
 }
 
+html,
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f9;
@@ -11,9 +12,51 @@ body {
     line-height: 1.4;
 }
 
-h1 {
-    color: #2c3e50;
-    margin-bottom: 15px;
+.app-layout {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr); /* Siempre tiene 12 columnas */
+    gap: 16px;
+    max-width: 1920px; /* Límite máximo de ancho */
+    margin: 0 auto; /* Centra la página en pantallas gigantes */
+    width: 100%;
+}
+
+.main-header,
+.main-content,
+.main-footer {
+    grid-column: 1 / -1;
+}
+
+.main-header {
+    background-color: #1e293b;
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+    margin-left: 1.5rem;
+}
+
+.main-content {
+    grid-column: span 12;
+}
+
+.main-footer {
+    background-color: #0f172a;
+    color: #94a3b8;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
 /* ----- BUTTONS ----- */
@@ -43,7 +86,7 @@ h1 {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.book-wrapper {
+.search-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
@@ -83,8 +126,14 @@ h1 {
     }
 }
 
+.book-wrapper {
+}
+
 @media only screen and (min-width: 600px) {
-    .book-wrapper {
+    .main-content {
+        grid-column: 2 / span 10;
+    }
+    .search-wrapper {
         grid-template-columns: repeat(3, 1fr);
         padding: 1rem 2rem;
     }
@@ -94,15 +143,21 @@ h1 {
 }
 
 @media only screen and (min-width: 992px) {
-    .book-wrapper {
+    .search-wrapper {
         grid-template-columns: repeat(4, 1fr);
         gap: 1.5rem;
     }
 }
 
 @media only screen and (min-width: 1200px) {
-    .book-wrapper {
+    .search-wrapper {
         grid-template-columns: repeat(5, 1fr);
         gap: 2rem;
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .main-content {
+        grid-column: span 12;
     }
 }

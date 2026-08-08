@@ -66,3 +66,23 @@ export async function searchBooks(title) {
         console.error("Hubo un problema con la búsqueda:", error);
     }
 }
+
+export async function getBook(id) {
+    const url = `${BASE_URL}/${id}?key=${API_KEY}`;
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Error en la petición ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        return data;
+    } catch (error) {
+        console.error(
+            "Hubo un problema al cargar la información del libro: ",
+            error,
+        );
+    }
+}
