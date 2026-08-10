@@ -37,7 +37,7 @@ export class Book {
         }
     }
 
-    static createFromOpenLibrary(data) {
+    static createFromGoogleBooks(data) {
         return new Book({
             title: data.title,
             author: data.author_name?.[0] ?? "Autor desconocido",
