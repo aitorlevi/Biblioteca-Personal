@@ -62,7 +62,7 @@ export function printBookInfo(book) {
                         <div class="book-info__titles">
                             <div class="book-info__copy">
                                 <h2>${bookData.title}</h2>
-                                <h4>${bookData.subtitle ?? ""}</h4>
+                                ${bookData.subtitle ? `<h4>${bookData.subtitle}</h4>` : ""}
                                 <h5>${authors}</h5>
                             </div>
                             <div class="book-info__buttons">
@@ -72,19 +72,21 @@ export function printBookInfo(book) {
                             </div>
                         </div>
                     </div>
+                    <div class="book__data">
+                        <h3 class="book__data-title">DATOS DEL LIBRO</h3>
+                        <ul class="book__data-list">
+                            <li class="book__data-item">Fecha de publicación: ${bookData.publishedDate}</li>
+                            <li class="book__data-item">Editorial: ${bookData.publisher}</li>
+                            <li class="book__data-item">Géneros: ${categories}</li>
+                            <li class="book__data-item">Nº de páginas: ${bookData.pageCount}</li>
+                            <li class="book__data-item">ISBN: ${bookData.industryIdentifiers.length > 1 ? bookData.industryIdentifiers[1].identifier : bookData.industryIdentifiers[0].identifier}</li>
+                            <li class="book__data-item">Precio: ${price}</li>
+                        </ul>
+                    </div>
                     <div class="book__summary">
                         <h3>SINOPSIS</h3>
-                        ${bookData.description}
-                    </div>
-                    <div class="book__data">
-                        <h3>DATOS DEL LIBRO</h3>
-                        <ul>
-                            <li>Fecha de publicación: ${bookData.publishedDate}</li>
-                            <li>Editorial: ${bookData.publisher}</li>
-                            <li>Géneros: ${categories}</li>
-                            <li>Nº de páginas: ${bookData.pageCount}</li>
-                            <li>ISBN: ${bookData.industryIdentifiers.length > 1 ? bookData.industryIdentifiers[1].identifier : bookData.industryIdentifiers[0].identifier}</li>
-                            <li>Precio: ${price}</li>
-                        </ul>
+                        <div class="book__summary-copy">
+                            ${bookData.description}
+                        </div>
                     </div>`;
 }

@@ -1,3 +1,62 @@
+:root {
+    /* Colors */
+    --color-primary: #854f6c;
+    --color-background: #fbe4d8;
+    --color-background-secondary: #dfb6b2;
+    --color-text: #190019;
+
+    --accent-primary: #2b124c;
+    --accent-secondary: #522b5b;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* Typography */
+    --font-main:
+        "Inter", system-ui, -apple-system, sans-serif; /* Limpia y muy legible */
+    --font-headings:
+        "Plus Jakarta Sans", var(--font-main); /* Moderna para títulos */
+
+    /* Font Sizes */
+    --font-size-sm: 0.875rem; /* 14px - Textos secundarios o etiquetas */
+    --font-size-base: 1rem; /* 16px - Texto del cuerpo */
+    --font-size-md: 1.25rem; /* 20px - Títulos de tarjetas */
+    --font-size-lg: 1.75rem; /* 28px - Títulos de secciones */
+    --font-size-xl: 2.5rem; /* 40px - Título principal (Hero) */
+
+    /* Font weight */
+    --weight-light: 300; /* Para textos muy específicos o sutiles */
+    --weight-normal: 400; /* Para el texto del cuerpo (lectura principal) */
+    --weight-medium: 500; /* Para subtítulos, nombres de autores o menús */
+    --weight-semibold: 600; /* Para títulos de tarjetas y botones */
+    --weight-bold: 700;
+
+    /* Spacing */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem; /* 8px */
+    --spacing-md: 1rem; /* 16px */
+    --spacing-lg: 1.5rem; /* 24px */
+    --spacing-xl: 3rem; /* 48px */
+
+    /* Borders & Radius */
+    --radius-sm: 4px; /* Para botones pequeños o etiquetas */
+    --radius-md: 8px; /* Para tarjetas de libros y dropdowns */
+    --radius-lg: 16px; /* Para contenedores grandes o modales */
+
+    /* Transitions */
+    --transition-fast: all 0.2s ease-in-out;
+    --transition-normal: all 0.3s ease;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(17, 24, 39, 0.05); /* Ideal para botones o inputs del buscador */
+    --shadow-md:
+        0 4px 6px -1px rgba(17, 24, 39, 0.07),
+        0 2px 4px -2px rgba(17, 24, 39, 0.05); /* Ideal para las tarjetas de los libros (cards) */
+    --shadow-lg:
+        0 10px 15px -3px rgba(17, 24, 39, 0.08),
+        0 4px 6px -4px rgba(17, 24, 39, 0.06); /* Ideal para menús desplegables, modales o elementos flotantes */
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -6,9 +65,9 @@
 
 html,
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    color: #333333;
+    font-family: var(--font-main);
+    background-color: var(--color-background);
+    color: var(--color-text);
     line-height: 1.4;
 }
 
@@ -22,13 +81,27 @@ img {
     width: 100%;
 }
 
+ul {
+    list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-headings);
+    margin-bottom: var(--spacing-sm);
+}
+
 /* ----- STRUCTURE ----- */
 
 .app-layout {
     display: grid;
     grid-template-columns: repeat(12, 1fr); /* Siempre tiene 12 columnas */
     grid-template-rows: auto minmax(0, 1fr) auto;
-    gap: 16px;
+    gap: var(--spacing-md);
     max-width: 1920px; /* Límite máximo de ancho */
     min-height: 100dvh;
     margin: 0 auto; /* Centra la página en pantallas gigantes */
@@ -43,9 +116,9 @@ img {
 
 .main-header {
     grid-row: 1;
-    background-color: #1e293b;
-    color: white;
-    padding: 1rem 2rem;
+    background-color: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -55,32 +128,33 @@ img {
     display: grid;
     grid-column: span 12;
     grid-row: 2;
-    padding: 1rem;
+    padding: var(--spacing-md);
 }
 
 .main-footer {
     grid-row: 3;
-    background-color: #0f172a;
-    color: #94a3b8;
+    background-color: var(--color-primary);
+    color: var(--color-background);
     text-align: center;
-    padding: 1rem;
-    font-size: 0.9rem;
+    padding: var(--spacing-md);
 }
 
 /* ----- BUTTONS ----- */
 
 .btn {
     display: inline-block;
-    background-color: #3498db;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 4px;
+    background-color: var(--accent-primary);
+    color: var(--color-white);
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-sm);
     text-decoration: none;
     font-weight: bold;
+    border: 1px solid var(--accent-primary);
+    transition: var(--transition-fast);
 }
 
 .btn:hover {
-    background-color: #2980b9;
+    background-color: var(--accent-secondary);
 }
 
 /* ----- HOME PAGE ----- */
@@ -88,49 +162,50 @@ img {
 .form-container {
     max-width: 800px;
     margin: 0 auto;
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: var(--color-background-secondary);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
 }
 
 .search-wrapper {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
 }
 
 .book-card {
     display: flex;
     flex-direction: column;
-    background-color: #d5d5d9;
-    padding: 1rem;
-    border-radius: 5px;
+    background-color: var(--color-background-secondary);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-md);
     align-items: center;
     text-align: center;
+    box-shadow: var(--shadow-md);
 
     .book-card__image {
         display: block;
-        border-radius: 5px;
+        border-radius: var(--radius-md);
         aspect-ratio: 3/4;
         width: 100%;
-        margin-bottom: 1rem;
+        margin-bottom: var(--spacing-md);
     }
 
     .book-card__title {
-        font-size: 1.5rem;
+        font-size: var(--spacing-lg);
     }
 
     .book-card__subtitle {
-        font-size: 1rem;
+        font-size: var(--spacing-md);
         font-weight: 400;
     }
 
     .book-card__author {
-        font-size: 1rem;
+        font-size: var(--spacing-md);
         font-weight: 600;
-        margin-top: 1rem;
+        margin-top: var(--spacing-md);
     }
 }
 
@@ -139,18 +214,15 @@ img {
 .book-info {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: var(--spacing-lg);
 
     .book-info__main {
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: var(--spacing-lg);
     }
 
     .book-info__image-container {
-        /* width: 70%; */
-        /* align-self: center; */
-        /* max-height: 60dvh; */
         grid-column: span 4;
     }
 
@@ -164,7 +236,7 @@ img {
         grid-column: span 7;
         display: flex;
         flex-direction: column;
-        gap: 1.5rem;
+        gap: var(--spacing-lg);
     }
 
     .book-info__copy {
@@ -175,14 +247,32 @@ img {
     .book-info__buttons {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
+        gap: var(--spacing-sm);
         align-items: stretch;
     }
 
-    .book__summary {
+    .book__data {
+        background-color: var(--color-background-secondary);
+        padding: var(--spacing-sm);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+
+        .book__data-list {
+            padding-inline-start: var(--spacing-sm);
+            list-style: disc;
+            list-style-position: inside;
+        }
     }
 
-    .book__data {
+    .book__summary {
+        background-color: var(--color-background-secondary);
+        padding: var(--spacing-sm);
+        border-radius: var(--radius-md);
+        box-shadow: var(--shadow-md);
+
+        .book__summary-copy {
+            padding: var(--spacing-sm);
+        }
     }
 }
 
@@ -192,7 +282,7 @@ img {
     }
     .search-wrapper {
         grid-template-columns: repeat(3, 1fr);
-        padding: 1rem 2rem;
+        padding: var(--spacing-md) var(--spacing-lg);
     }
     .book-info {
         display: grid;
@@ -206,14 +296,14 @@ img {
 @media only screen and (min-width: 992px) {
     .search-wrapper {
         grid-template-columns: repeat(4, 1fr);
-        gap: 1.5rem;
+        gap: var(--spacing-lg);
     }
 }
 
 @media only screen and (min-width: 1200px) {
     .search-wrapper {
         grid-template-columns: repeat(5, 1fr);
-        gap: 2rem;
+        gap: var(--spacing-lg);
     }
 }
 
