@@ -22,7 +22,8 @@
     --font-size-base: 1rem; /* 16px - Texto del cuerpo */
     --font-size-md: 1.25rem; /* 20px - Títulos de tarjetas */
     --font-size-lg: 1.75rem; /* 28px - Títulos de secciones */
-    --font-size-xl: 2.5rem; /* 40px - Título principal (Hero) */
+    --font-size-xl: 2rem; /* 32px - Título principal */
+    --font-size-xxl: 2.5rem; /* 40px - Título principal (Hero) */
 
     /* Font weight */
     --weight-light: 300; /* Para textos muy específicos o sutiles */
@@ -36,7 +37,8 @@
     --spacing-sm: 0.5rem; /* 8px */
     --spacing-md: 1rem; /* 16px */
     --spacing-lg: 1.5rem; /* 24px */
-    --spacing-xl: 3rem; /* 48px */
+    --spacing-xl: 2rem; /* 32px */
+    --spacing-xxl: 3rem; /* 48px */
 
     /* Borders & Radius */
     --radius-sm: 4px; /* Para botones pequeños o etiquetas */
@@ -66,6 +68,7 @@
 html,
 body {
     font-family: var(--font-main);
+    font-size: 16px;
     background-color: var(--color-background);
     color: var(--color-text);
     line-height: 1.4;
@@ -85,6 +88,25 @@ ul {
     list-style: none;
 }
 
+h1 {
+    font-size: 2.25rem;
+}
+h2 {
+    font-size: 1.875rem;
+}
+h3 {
+    font-size: 1.5rem;
+}
+h4 {
+    font-size: 1.25rem;
+}
+h5 {
+    font-size: 1.125rem;
+}
+h6 {
+    font-size: 1rem;
+}
+
 h1,
 h2,
 h3,
@@ -93,6 +115,21 @@ h5,
 h6 {
     font-family: var(--font-headings);
     margin-bottom: var(--spacing-sm);
+}
+
+@media only screen and (min-width: 600px) {
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 992px) {
+}
+
+@media only screen and (min-width: 1200px) {
+}
+
+@media only screen and (min-width: 1920px) {
 }
 
 /* ----- STRUCTURE ----- */
@@ -139,6 +176,27 @@ h6 {
     padding: var(--spacing-md);
 }
 
+@media only screen and (min-width: 600px) {
+    .main-content {
+        grid-column: 2 / span 10;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 992px) {
+}
+
+@media only screen and (min-width: 1200px) {
+}
+
+@media only screen and (min-width: 1920px) {
+    .main-content {
+        grid-column: span 12;
+    }
+}
+
 /* ----- BUTTONS ----- */
 
 .btn {
@@ -151,6 +209,7 @@ h6 {
     font-weight: bold;
     border: 1px solid var(--accent-primary);
     transition: var(--transition-fast);
+    font-size: var(--font-size-base);
 }
 
 .btn:hover {
@@ -209,12 +268,39 @@ h6 {
     }
 }
 
+@media only screen and (min-width: 600px) {
+    .search-wrapper {
+        grid-template-columns: repeat(3, 1fr);
+        padding: var(--spacing-md) var(--spacing-lg);
+    }
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 992px) {
+    .search-wrapper {
+        grid-template-columns: repeat(4, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .search-wrapper {
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--spacing-lg);
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+}
+
 /* ----- BOOK PAGE ----- */
 
 .book-info {
     display: flex;
     flex-direction: column;
-    gap: var(--spacing-lg);
+    gap: var(--spacing-xl);
 
     .book-info__main {
         display: flex;
@@ -223,7 +309,6 @@ h6 {
     }
 
     .book-info__image-container {
-        grid-column: span 4;
     }
 
     .book-info__image {
@@ -233,10 +318,9 @@ h6 {
     }
 
     .book-info__titles {
-        grid-column: span 7;
         display: flex;
         flex-direction: column;
-        gap: var(--spacing-lg);
+        gap: var(--spacing-sm);
     }
 
     .book-info__copy {
@@ -272,21 +356,32 @@ h6 {
 
         .book__summary-copy {
             padding: var(--spacing-sm);
+
+            p {
+                margin-bottom: var(--spacing-lg);
+            }
         }
     }
 }
 
 @media only screen and (min-width: 600px) {
-    .main-content {
-        grid-column: 2 / span 10;
-    }
-    .search-wrapper {
-        grid-template-columns: repeat(3, 1fr);
-        padding: var(--spacing-md) var(--spacing-lg);
-    }
     .book-info {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
+        .book-info__main {
+            flex-direction: row;
+        }
+
+        .book-info__image {
+            width: auto;
+            height: 50dvh;
+        }
+
+        .book-info__buttons {
+            align-items: flex-start;
+
+            .btn {
+                padding: var(--spacing-sm) var(--spacing-lg);
+            }
+        }
     }
 }
 
@@ -294,21 +389,10 @@ h6 {
 }
 
 @media only screen and (min-width: 992px) {
-    .search-wrapper {
-        grid-template-columns: repeat(4, 1fr);
-        gap: var(--spacing-lg);
-    }
 }
 
 @media only screen and (min-width: 1200px) {
-    .search-wrapper {
-        grid-template-columns: repeat(5, 1fr);
-        gap: var(--spacing-lg);
-    }
 }
 
 @media only screen and (min-width: 1920px) {
-    .main-content {
-        grid-column: span 12;
-    }
 }
