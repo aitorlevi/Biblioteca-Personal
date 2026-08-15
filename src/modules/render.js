@@ -1,6 +1,7 @@
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
 export function printBooks(books) {
+    console.log("printBooks");
     console.log(books);
     const container = document.querySelector("#searchResults");
     container.innerHTML = books
@@ -11,21 +12,23 @@ export function printBooks(books) {
         )
         .map((book) => {
             const id = book.id;
-            const bookData = book.volumeInfo;
+            const title = book.volumeInfo.title;
+            const subtitle = book.volumeInfo.subtitle ?? null;
             const authors =
-                bookData.authors && bookData.authors.length > 0
-                    ? bookData.authors.join()
+                book.volumeInfo.authors && book.volumeInfo.authors.length > 0
+                    ? book.volumeInfo.authors.join()
                     : "Autor desconocido";
-            const picture =
-                bookData.imageLinks && bookData.imageLinks.thumbnail
-                    ? bookData.imageLinks.thumbnail
-                    : "../../../../public/images/image-not-found.png";
+            const image = setImages(
+                book.volumeInfo.imageLinks,
+                title,
+                "book-card__image",
+            );
 
             return `<article>
                         <a class="book-card" href="./book.html?id=${id}">
-                            <img src="${picture}" class="book-card__image" alt="${bookData.title}" />
-                            <h3 class="book-card__title">${bookData.title}</h3>
-                            <h4 class="book-card__subtitle">${bookData.subtitle ?? ""}</h4>
+                            ${image}
+                            <h3 class="book-card__title">${title}</h3>
+                            ${subtitle ? `<h4>${subtitle}</h4>` : ""}
                             <h4 class="book-card__author">${authors}</h4>
                         </a>
                     </article>`;
@@ -47,8 +50,8 @@ export function printBookInfo(book) {
             : "Autor desconocido";
     const price = `${book.saleInfo.listPrice.amount} ${book.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`;
     const isbn =
-        bookData.industryIdentifiers[1].identifier ??
-        bookData.industryIdentifiers[0].identifier;
+        book.volumeInfo.industryIdentifiers[1].identifier ??
+        book.volumeInfo.industryIdentifiers[0].identifier;
     const publishedDate = book.volumeInfo.publishedDate;
     const publisher = book.volumeInfo.publisher;
     const pageCount = book.volumeInfo.pageCount;
@@ -57,22 +60,22 @@ export function printBookInfo(book) {
             ? book.volumeInfo.categories.join()
             : "";
     const description = book.volumeInfo.description;
+    const imageLinks = book.volumeInfo.imageLinks;
+
+    let largeSrc, mediumSrc, defaultSrc;
+
+    const image = setImages(
+        book.volumeInfo.imageLinks,
+        title,
+        "book-info__image",
+    );
 
     const pageTitle = document.querySelector("#pageTitle");
     pageTitle.innerHTML = `AitorTeca - ${title}`;
 
     container.innerHTML = `<div class="book-info__main">
                         <div class="book-info__image-container">
-                            ${
-                                bookData.imageLinks
-                                    ? `<picture>
-                                    <source media="(min-width: 1200px)" srcset="${bookData.imageLinks.large}"></source>
-                                    <source media="(min-width: 768px)" srcset="${bookData.imageLinks.medium}"></source>
-                                    <img class="img book-info__image" src="${bookData.imageLinks.small}" alt="${bookData.title} loading="eager"></img>
-                                </picture>`
-                                    : "<img class='img book-info__image' src='../../../../public/images/image-not-found.png' alt='Imagen no encontrada' />"
-                            }
-                            
+                            ${image}
                         </div>
                         <div class="book-info__titles">
                             <div class="book-info__copy">
@@ -99,9 +102,69 @@ export function printBookInfo(book) {
                         </ul>
                     </div>
                     <div class="book__summary">
-                        <h3>SINOPSIS</h3>
+                        <h3>DESCRIPCIÓN</h3>
                         <div class="book__summary-copy">
                             ${description}
                         </div>
                     </div>`;
+}
+
+// TODO: Borrar, solo se usa para probar
+function compareImages(imagesToCompare, image) {
+    switch (image) {
+        case imagesToCompare.extraLarge:
+            return "extraLarge";
+        case imagesToCompare.large:
+            return "large";
+        case imagesToCompare.medium:
+            return "medium";
+        case imagesToCompare.small:
+            return "small";
+        case imagesToCompare.smallThumbnail:
+            return "smallThumbnail";
+        case imagesToCompare.thumbnail:
+            return "thumbnail";
+        default:
+            return "default";
+    }
+}
+
+function setImages(imageLinks, title, extraClases) {
+    let largeSrc, mediumSrc, defaultSrc;
+
+    if (imageLinks) {
+        largeSrc =
+            imageLinks.large ||
+            imageLinks.medium ||
+            imageLinks.small ||
+            imageLinks.thumbnail ||
+            imageLinks.smallThumbnail ||
+            imageLinks.thumbnail ||
+            DEFAULT_BOOK_COVER;
+        mediumSrc =
+            imageLinks.medium ||
+            imageLinks.small ||
+            imageLinks.smallThumbnail ||
+            imageLinks.thumbnail ||
+            DEFAULT_BOOK_COVER;
+        defaultSrc =
+            imageLinks.medium ||
+            imageLinks.small ||
+            imageLinks.smallThumbnail ||
+            imageLinks.thumbnail ||
+            DEFAULT_BOOK_COVER;
+    } else {
+        largeSrc = mediumSrc = defaultSrc = DEFAULT_BOOK_COVER;
+    }
+
+    return `<picture>
+                <source media="(min-width: 1024px)" srcset="${largeSrc}">
+                <source media="(min-width: 768px)" srcset="${mediumSrc}">
+                <img 
+                src="${defaultSrc}" 
+                class="img ${extraClases}"
+                alt="Portada de ${title}" 
+                loading="eager"
+                >
+            </picture>`;
 }

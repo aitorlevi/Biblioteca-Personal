@@ -14,6 +14,4 @@ form.addEventListener("submit", async (e) => {
             document.querySelector("#searchResult").innerHTML =
                 "<p>No se ha podido realizar la búsqueda.</p>";
         });
-
-    printBooks(books);
 });
