@@ -24,11 +24,13 @@ export function printBooks(books) {
                 "book-card__image",
             );
 
-            return `<article>
-                        <a class="book-card" href="./book.html?id=${id}">
-                            ${image}
+            return `<article class="book-card">
+                        <a class="book-card__link" href="./book.html?id=${id}" title="${title}">
+                            <picture class="book-card__picture">
+                                ${image}
+                            </picture>
                             <h3 class="book-card__title">${title}</h3>
-                            ${subtitle ? `<h4>${subtitle}</h4>` : ""}
+                            ${subtitle ? `<h4 class="book-card__subtitle">${subtitle}</h4>` : ""}
                             <h4 class="book-card__author">${authors}</h4>
                         </a>
                     </article>`;
@@ -75,7 +77,9 @@ export function printBookInfo(book) {
 
     container.innerHTML = `<div class="book-info__main">
                         <div class="book-info__image-container">
-                            ${image}
+                            <picture>
+                                ${image}
+                            </picture>
                         </div>
                         <div class="book-info__titles">
                             <div class="book-info__copy">
@@ -157,14 +161,12 @@ function setImages(imageLinks, title, extraClases) {
         largeSrc = mediumSrc = defaultSrc = DEFAULT_BOOK_COVER;
     }
 
-    return `<picture>
-                <source media="(min-width: 1024px)" srcset="${largeSrc}">
-                <source media="(min-width: 768px)" srcset="${mediumSrc}">
-                <img 
-                src="${defaultSrc}" 
-                class="img ${extraClases}"
-                alt="Portada de ${title}" 
-                loading="eager"
-                >
-            </picture>`;
+    return `<source media="(min-width: 1024px)" srcset="${largeSrc}">
+            <source media="(min-width: 768px)" srcset="${mediumSrc}">
+            <img 
+            src="${defaultSrc}" 
+            class="img${extraClases ? ` ${extraClases}` : ""}"
+            alt="Portada de ${title}" 
+            loading="eager"
+            >`;
 }

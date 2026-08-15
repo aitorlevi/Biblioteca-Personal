@@ -51,7 +51,7 @@ export class Book {
 }
 
 export async function searchBooks(title) {
-    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&langRestrict=es&key=${API_KEY}`;
+    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&langRestrict=es&maxResults=20&key=${API_KEY}`;
     try {
         const response = await fetch(url);
 
