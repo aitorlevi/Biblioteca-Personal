@@ -43,7 +43,6 @@ export function printBookInfo(book) {
     console.log(book);
     const container = document.querySelector("#bookInfo");
 
-    const bookData = book.volumeInfo;
     const title = book.volumeInfo.title;
     const subtitle = book.volumeInfo.subtitle ?? null;
     const authors =
@@ -63,8 +62,6 @@ export function printBookInfo(book) {
             : "";
     const description = book.volumeInfo.description;
     const imageLinks = book.volumeInfo.imageLinks;
-
-    let largeSrc, mediumSrc, defaultSrc;
 
     const image = setImages(
         book.volumeInfo.imageLinks,

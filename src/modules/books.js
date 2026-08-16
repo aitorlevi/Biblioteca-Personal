@@ -2,12 +2,23 @@ const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 import { API_KEY } from "./config.js";
 
 export class Book {
-    constructor(title, author, isbn = null, cover = null, year = null) {
+    constructor(
+        title,
+        author,
+        subtitle = null,
+        isbn = null,
+        cover = null,
+        publishedDate = null,
+        publisher = null,
+    ) {
         this.id = crypto.getRandomValues();
         this.title = title;
+        this.subtitle = subtitle;
         this.author = author;
+        this.isbn = isbn;
         this.cover = cover;
-        this.year = year;
+        this.publishedDate = publishedDate;
+        this.publisher = publisher;
         this.status = null;
         this.rating = null;
         this.dataAdded = new Date().toISOString();
@@ -40,12 +51,12 @@ export class Book {
     static createFromGoogleBooks(data) {
         return new Book({
             title: data.title,
-            author: data.author_name?.[0] ?? "Autor desconocido",
-            isbn: data.isbn?.[0] ?? null,
-            cover: data.cover_i
-                ? `https://covers.openlibrary.org/b/id/${dataCruda.cover_i}-M.jpg`
-                : null,
-            year: data.first_publish_year ?? null,
+            subtitle: data.subtitle,
+            author: data.author,
+            isbn: data.isbn,
+            cover: data.cover,
+            publishedDate: data.publishedDate,
+            publisher: data.publisher,
         });
     }
 }

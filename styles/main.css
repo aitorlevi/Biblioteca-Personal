@@ -391,6 +391,7 @@ label {
         width: auto;
         height: 40dvh;
         margin: 0 auto;
+        border-radius: var(--radius-md);
     }
 
     .book-info__titles {

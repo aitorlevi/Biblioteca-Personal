@@ -10,4 +10,13 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 ### BOOK PAGE
 
 - Ratings
-- Add book to shelf
+- Add book to shelf - createFromGoogleBooks()
+- Set storage.js - Save, read, update and remove books from localStorage
+- Connect button to add book to shelf
+
+### SHELF PAGE
+
+- Create collection.html
+- Print books from localStorage
+- Update status from shelf page
+- Remove book from shelf
