@@ -1,3 +1,5 @@
+import { processBookData } from "./books.js";
+
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
 export function printBooks(books) {
@@ -43,34 +45,16 @@ export function printBookInfo(book) {
     console.log(book);
     const container = document.querySelector("#bookInfo");
 
-    const title = book.volumeInfo.title;
-    const subtitle = book.volumeInfo.subtitle ?? null;
-    const authors =
-        book.volumeInfo.authors && book.volumeInfo.authors.length > 0
-            ? book.volumeInfo.authors.join()
-            : "Autor desconocido";
-    const price = `${book.saleInfo.listPrice.amount} ${book.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`;
-    const isbn =
-        book.volumeInfo.industryIdentifiers[1].identifier ??
-        book.volumeInfo.industryIdentifiers[0].identifier;
-    const publishedDate = book.volumeInfo.publishedDate;
-    const publisher = book.volumeInfo.publisher;
-    const pageCount = book.volumeInfo.pageCount;
-    const categories =
-        book.volumeInfo.categories && book.volumeInfo.categories.length > 0
-            ? book.volumeInfo.categories.join()
-            : "";
-    const description = book.volumeInfo.description;
-    const imageLinks = book.volumeInfo.imageLinks;
+    const processedBook = processBookData(book);
 
     const image = setImages(
-        book.volumeInfo.imageLinks,
-        title,
+        processedBook.imageLinks,
+        processedBook.title,
         "book-info__image",
     );
 
     const pageTitle = document.querySelector("#pageTitle");
-    pageTitle.innerHTML = `AitorTeca - ${title}`;
+    pageTitle.innerHTML = `AitorTeca - ${processedBook.title}`;
 
     container.innerHTML = `<div class="book-info__main">
                         <div class="book-info__image-container">
@@ -80,13 +64,13 @@ export function printBookInfo(book) {
                         </div>
                         <div class="book-info__titles">
                             <div class="book-info__copy">
-                                <h2>${title}</h2>
-                                ${subtitle ? `<h4>${subtitle}</h4>` : ""}
-                                <h4>${authors}</h4>
-                                <h5>Precio aproximado en librerías: ${price}</h5>
+                                <h2>${processedBook.title}</h2>
+                                ${processedBook.subtitle ? `<h4>${processedBook.subtitle}</h4>` : ""}
+                                <h4>${processedBook.author}</h4>
+                                <h5>Precio aproximado en librerías: ${processedBook.price}</h5>
                             </div>
                             <div class="book-info__buttons">
-                                <button class="btn btn__primary">
+                                <button class="btn btn__primary" id="addToLibraryBtn">
                                     Añadir a la biblioteca
                                 </button>
                             </div>
@@ -95,17 +79,17 @@ export function printBookInfo(book) {
                     <div class="book__data">
                         <h3 class="book__data-title">DATOS DEL LIBRO</h3>
                         <ul class="book__data-list">
-                            <li class="book__data-item"><b>ISBN</b>: ${isbn}</li>
-                            <li class="book__data-item"><b>Fecha de publicación</b>: ${publishedDate}</li>
-                            <li class="book__data-item"><b>Editorial</b>: ${publisher}</li>
-                            <li class="book__data-item"><b>Géneros</b>: ${categories}</li>
-                            <li class="book__data-item"><b>Número de páginas</b>: ${pageCount}</li>
+                            <li class="book__data-item"><b>ISBN</b>: ${processedBook.isbn}</li>
+                            <li class="book__data-item"><b>Fecha de publicación</b>: ${processedBook.publishedDate}</li>
+                            <li class="book__data-item"><b>Editorial</b>: ${processedBook.publisher}</li>
+                            <li class="book__data-item"><b>Géneros</b>: ${processedBook.categories}</li>
+                            <li class="book__data-item"><b>Número de páginas</b>: ${processedBook.pageCount}</li>
                         </ul>
                     </div>
                     <div class="book__summary">
                         <h3>DESCRIPCIÓN</h3>
                         <div class="book__summary-copy">
-                            ${description}
+                            ${processedBook.description}
                         </div>
                     </div>`;
 }

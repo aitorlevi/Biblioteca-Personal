@@ -1,8 +1,10 @@
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 import { API_KEY } from "./config.js";
 
+const array = new Uint32Array(1);
+
 export class Book {
-    constructor(
+    constructor({
         title,
         author,
         subtitle = null,
@@ -10,8 +12,8 @@ export class Book {
         cover = null,
         publishedDate = null,
         publisher = null,
-    ) {
-        this.id = crypto.getRandomValues();
+    }) {
+        this.id = crypto.getRandomValues(array)[0];
         this.title = title;
         this.subtitle = subtitle;
         this.author = author;
@@ -54,7 +56,7 @@ export class Book {
             subtitle: data.subtitle,
             author: data.author,
             isbn: data.isbn,
-            cover: data.cover,
+            cover: data.imageLinks.thumbnail,
             publishedDate: data.publishedDate,
             publisher: data.publisher,
         });
@@ -96,4 +98,29 @@ export async function getBook(id) {
             error,
         );
     }
+}
+
+export function processBookData(rawData) {
+    return {
+        title: rawData.volumeInfo.title,
+        subtitle: rawData.volumeInfo.subtitle ?? null,
+        author:
+            rawData.volumeInfo.authors && rawData.volumeInfo.authors.length > 0
+                ? rawData.volumeInfo.authors.join()
+                : "Autor desconocido",
+        price: `${rawData.saleInfo.listPrice.amount} ${rawData.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`,
+        isbn:
+            rawData.volumeInfo.industryIdentifiers[1].identifier ??
+            rawData.volumeInfo.industryIdentifiers[0].identifier,
+        publishedDate: rawData.volumeInfo.publishedDate,
+        publisher: rawData.volumeInfo.publisher,
+        pageCount: rawData.volumeInfo.pageCount,
+        categories:
+            rawData.volumeInfo.categories &&
+            rawData.volumeInfo.categories.length > 0
+                ? rawData.volumeInfo.categories.join()
+                : "",
+        description: rawData.volumeInfo.description,
+        imageLinks: rawData.volumeInfo.imageLinks,
+    };
 }

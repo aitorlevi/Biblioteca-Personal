@@ -228,6 +228,7 @@ select {
     transition: var(--transition-fast);
     font-size: var(--font-size-base);
     height: calc(var(--spacing-md) * 2.5);
+    cursor: pointer;
 }
 
 .btn:hover {
