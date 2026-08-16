@@ -4,16 +4,17 @@ import { API_KEY } from "./config.js";
 const array = new Uint32Array(1);
 
 export class Book {
-    constructor({
+    constructor(
+        id,
         title,
-        author,
         subtitle = null,
+        author,
         isbn = null,
         cover = null,
         publishedDate = null,
         publisher = null,
-    }) {
-        this.id = crypto.getRandomValues(array)[0];
+    ) {
+        this.id = id;
         this.title = title;
         this.subtitle = subtitle;
         this.author = author;
@@ -51,15 +52,16 @@ export class Book {
     }
 
     static createFromGoogleBooks(data) {
-        return new Book({
-            title: data.title,
-            subtitle: data.subtitle,
-            author: data.author,
-            isbn: data.isbn,
-            cover: data.imageLinks.thumbnail,
-            publishedDate: data.publishedDate,
-            publisher: data.publisher,
-        });
+        return new Book(
+            data.id,
+            data.title,
+            data.subtitle,
+            data.author,
+            data.isbn,
+            data.imageLinks.thumbnail,
+            data.publishedDate,
+            data.publisher,
+        );
     }
 }
 
@@ -102,6 +104,7 @@ export async function getBook(id) {
 
 export function processBookData(rawData) {
     return {
+        id: rawData.id,
         title: rawData.volumeInfo.title,
         subtitle: rawData.volumeInfo.subtitle ?? null,
         author:

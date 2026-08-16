@@ -1,10 +1,33 @@
-import { Book } from "./books.js";
-
 export function addBookToShelf(book) {
     const currentCollection =
         JSON.parse(localStorage.getItem("collection")) || [];
 
+    const isAlready = currentCollection.some(
+        (savedBook) => savedBook.id === book.id,
+    );
+
+    if (isAlready) {
+        // TODO: Añadir alerta
+        console.info("Libro ya en la lista");
+        return;
+    }
+
     currentCollection.push(book);
+
+    localStorage.setItem("collection", JSON.stringify(currentCollection));
+}
+
+export function deleteBookFromShelf(bookId) {
+    const currentCollection =
+        JSON.parse(localStorage.getItem("collection")) || [];
+
+    const bookPosition = currentCollection.findIndex((book) => book.id === id);
+
+    if (bookPosition >= 0) {
+        currentCollection.splice(bookPosition, 1);
+    } else {
+        console.info("Este libro no esta en la colección");
+    }
 
     localStorage.setItem("collection", JSON.stringify(currentCollection));
 }
