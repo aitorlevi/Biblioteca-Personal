@@ -4,19 +4,20 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 
 ### HOME PAGE
 
-- Advanced search
-- Menu
+- [x] Advanced search
+- [x] Menu
 
 ### BOOK PAGE
 
-- Ratings
-- Add book to shelf - createFromGoogleBooks()
-- Set storage.js - Save, read, update and remove books from localStorage
-- Connect button to add book to shelf
+- [x] Ratings
+- [x] Add book to shelf - createFromGoogleBooks()
+- [x] Set storage.js - Save, read, update and remove books from localStorage
+- [x] Connect button to add book to shelf
+- [] Add to library stabilizing status
 
 ### SHELF PAGE
 
-- Create collection.html
-- Print books from localStorage
-- Update status from shelf page
-- Remove book from shelf
+- [x] Create collection.html
+- [x] Print books from localStorage
+- [] Update status from shelf page
+- [] Remove book from shelf
