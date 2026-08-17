@@ -58,7 +58,7 @@ export class Book {
             data.subtitle,
             data.author,
             data.isbn,
-            data.imageLinks.thumbnail,
+            data.imageLinks,
             data.publishedDate,
             data.publisher,
         );

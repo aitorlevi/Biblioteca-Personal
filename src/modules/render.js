@@ -2,8 +2,8 @@ import { processBookData } from "./books.js";
 
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
-export function printBooks(books) {
-    console.log("printBooks");
+export function printBooksFromSearch(books) {
+    console.log("printBooksFromSearch");
     console.log(books);
     const container = document.querySelector("#searchResults");
     container.innerHTML = books
@@ -92,6 +92,33 @@ export function printBookInfo(book) {
                             ${processedBook.description}
                         </div>
                     </div>`;
+}
+
+export function printBooksFromStorage(books) {
+    console.log("printBooksFromStorage");
+    console.log(books);
+
+    const container = document.querySelector("#bookShelf");
+    container.innerHTML = books
+        .map((book) => {
+            const id = book.id;
+            const title = book.title;
+            const subtitle = book.subtitle;
+            const author = book.author;
+            const cover = setImages(book.cover, book.title, "book-card__image");
+
+            return `<article class="book-card">
+                        <a class="book-card__link" href="./book.html?id=${id}" title="${title}">
+                            <picture class="book-card__picture">
+                                ${cover}
+                            </picture>
+                            <h3 class="book-card__title">${title}</h3>
+                            ${subtitle ? `<h4 class="book-card__subtitle">${subtitle}</h4>` : ""}
+                            <h4 class="book-card__author">${author}</h4>
+                        </a>
+                    </article>`;
+        })
+        .join("");
 }
 
 // TODO: Borrar, solo se usa para probar

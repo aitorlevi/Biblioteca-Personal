@@ -3,14 +3,14 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>AitorTeca</title>
+        <title id="pageTitle">Biblioteca privada</title>
         <link
             rel="icon"
             href="/public/favicon/favicon.ico"
             type="image/x-icon"
         />
         <link rel="stylesheet" href="styles/main.css" />
-        <script type="module" src="src/app.js"></script>
+        <script type="module" src="src/collection.js"></script>
     </head>
     <body>
         <div class="app-layout">
@@ -21,20 +21,7 @@
             </header>
             <main class="main-content">
                 <div class="container">
-                    <a href="/collection.html"><h1>Colección</h1></a>
-                    <section id="form">
-                        <form action="" id="formSearch" class="form-container">
-                            <div class="label-input">
-                                <label for="title">Titulo</label>
-                                <input type="text" id="title" name="title" />
-                            </div>
-                            <button class="btn" type="submit">Buscar</button>
-                        </form>
-                    </section>
-                    <section
-                        id="searchResults"
-                        class="search-results"
-                    ></section>
+                    <section id="bookShelf" class="book-shelf"></section>
                 </div>
             </main>
             <footer class="main-footer">

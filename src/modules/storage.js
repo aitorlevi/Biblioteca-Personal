@@ -26,8 +26,18 @@ export function deleteBookFromShelf(bookId) {
     if (bookPosition >= 0) {
         currentCollection.splice(bookPosition, 1);
     } else {
+        // TODO: Añadir alerta
         console.info("Este libro no esta en la colección");
     }
 
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+}
+
+export function updateBookFromShelf() {}
+
+export function getBooksFromShelf() {
+    const currentCollection =
+        JSON.parse(localStorage.getItem("collection")) || [];
+
+    return currentCollection;
 }
