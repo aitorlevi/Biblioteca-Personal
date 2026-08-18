@@ -124,21 +124,6 @@ select {
     font-size: inherit;
 }
 
-@media only screen and (min-width: 600px) {
-}
-
-@media only screen and (min-width: 768px) {
-}
-
-@media only screen and (min-width: 992px) {
-}
-
-@media only screen and (min-width: 1200px) {
-}
-
-@media only screen and (min-width: 1920px) {
-}
-
 /* ----- STRUCTURE ----- */
 
 .app-layout {
@@ -192,28 +177,6 @@ select {
     margin: 0 auto;
 }
 
-@media only screen and (min-width: 600px) {
-    .main-content {
-        grid-column: 2 / span 10;
-        padding: 0;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-}
-
-@media only screen and (min-width: 992px) {
-}
-
-@media only screen and (min-width: 1200px) {
-}
-
-@media only screen and (min-width: 1920px) {
-    .main-content {
-        grid-column: span 12;
-    }
-}
-
 /* ----- BUTTON ----- */
 
 .btn {
@@ -262,7 +225,7 @@ label {
     width: auto;
 }
 
-/* ----- HOME PAGE ----- */
+/* ----- CONTENT ----- */
 
 .form-container {
     max-width: 800px;
@@ -277,7 +240,8 @@ label {
     justify-content: space-between;
 }
 
-.search-results {
+.search-results,
+.book-shelf {
     display: grid;
     grid-template-columns: repeat(1, minmax(0, 1fr));
     gap: var(--spacing-md);
@@ -343,39 +307,6 @@ label {
         }
     }
 }
-
-@media only screen and (min-width: 600px) {
-    .search-results {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        padding: var(--spacing-md) 0;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .search-results {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        padding: var(--spacing-md) 0;
-    }
-}
-
-@media only screen and (min-width: 992px) {
-    .search-results {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: var(--spacing-lg);
-    }
-}
-
-@media only screen and (min-width: 1200px) {
-    .search-results {
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: var(--spacing-lg);
-    }
-}
-
-@media only screen and (min-width: 1920px) {
-}
-
-/* ----- BOOK PAGE ----- */
 
 .book-info {
     display: flex;
@@ -443,6 +374,16 @@ label {
 }
 
 @media only screen and (min-width: 600px) {
+    .main-content {
+        grid-column: 2 / span 10;
+        padding: 0;
+    }
+
+    .search-results,
+    .book-shelf {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding: var(--spacing-md) 0;
+    }
     .book-info {
         .book-info__main {
             flex-direction: row;
@@ -463,6 +404,11 @@ label {
 }
 
 @media only screen and (min-width: 768px) {
+    .search-results,
+    .book-shelf {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        padding: var(--spacing-md) 0;
+    }
     .book-info {
         .book-info__image {
             height: 35dvh;
@@ -471,6 +417,11 @@ label {
 }
 
 @media only screen and (min-width: 992px) {
+    .search-results,
+    .book-shelf {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--spacing-lg);
+    }
     .book-info {
         .book-info__image {
             height: 50dvh;
@@ -479,45 +430,15 @@ label {
 }
 
 @media only screen and (min-width: 1200px) {
-}
-
-@media only screen and (min-width: 1920px) {
-}
-
-/* ----- COLLECTION PAGE ----- */
-
-.book-shelf {
-    display: grid;
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    gap: var(--spacing-md);
-    margin-top: var(--spacing-lg);
-    align-items: stretch;
-}
-
-@media only screen and (min-width: 600px) {
-    .book-shelf {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        padding: var(--spacing-md) 0;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    .book-shelf {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        padding: var(--spacing-md) 0;
-    }
-}
-
-@media only screen and (min-width: 992px) {
-    .book-shelf {
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: var(--spacing-lg);
-    }
-}
-
-@media only screen and (min-width: 1200px) {
+    .search-results,
     .book-shelf {
         grid-template-columns: repeat(5, minmax(0, 1fr));
         gap: var(--spacing-lg);
+    }
+}
+
+@media only screen and (min-width: 1920px) {
+    .main-content {
+        grid-column: span 12;
     }
 }
