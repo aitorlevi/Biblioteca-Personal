@@ -5,13 +5,15 @@ import { addBookToShelf } from "./modules/storage.js";
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 const bookInfoContainer = document.querySelector("#bookInfo");
+const overlayStatus = document.querySelector("#ovelrayStatus");
 let currentRawData = null;
 
 bookInfoContainer.addEventListener("click", () => {
-    if (event.target && event.target.matches("#addToLibraryBtn")) {
-        const book = Book.createFromGoogleBooks(currentRawData);
-        addBookToShelf(book);
-    }
+    // if (event.target && event.target.matches("#addToLibraryBtn")) {
+    //     const book = Book.createFromGoogleBooks(currentRawData);
+    //     addBookToShelf(book);
+    // }
+    overlayStatus.classList.add("is-shown");
 });
 
 if (id) {
