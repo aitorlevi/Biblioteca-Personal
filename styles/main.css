@@ -2,7 +2,8 @@
     /* Colors */
     --color-primary: #854f6c;
     --color-background: #fbe4d8;
-    --color-background-1: #f8f1ed;
+    --color-background-soft: #f8f1ed;
+    --color-background-soft-opacity: #f8f1ed9f;
     --color-background-secondary: #dfb6b2;
     --color-text: #190019;
 
@@ -200,14 +201,15 @@ select {
 }
 
 .btn--choose {
-    background-color: var(--color-background-1);
+    background-color: transparent;
+
     color: var(--color-text);
     border: 2px solid var(--accent-primary);
 }
 
 .btn--choose:hover {
     /* border: 3px solid var(--accent-primary); */
-    background-color: var(--color-background);
+    background-color: var(--color-background-secondary);
 }
 
 /* ----- LABEL & INPUT ----- */
@@ -395,11 +397,11 @@ label {
     background-color: rgba(0, 0, 0, 0.4);
     z-index: 1000;
 
-    &.is-shown {
+    &.show {
         display: block;
     }
 
-    .overlay__window {
+    .overlay__modal {
         background-color: var(--color-background);
         border-radius: var(--shadow-lg);
         position: relative;
@@ -415,6 +417,20 @@ label {
         opacity: 1;
         margin: 100px auto;
         border-radius: var(--radius-lg);
+    }
+
+    .overlay__close {
+        position: absolute;
+        right: var(--spacing-lg);
+        top: var(--spacing-md);
+        font-size: var(--font-size-xxl);
+        border: none;
+        background: none;
+        cursor: pointer;
+    }
+
+    .overlay__title {
+        margin-top: var(--spacing-lg);
     }
 
     .overlay__buttons {

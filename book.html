@@ -25,36 +25,36 @@
                         <!-- TODO VALORACIONES -->
                     </section>
                 </div>
-                <div id="ovelrayStatus" class="overlay">
-                    <div class="overlay__window">
-                        <!-- TODO CLOSE OVERLAY -->
-                        <h4>Selecciona el estado:</h4>
+                <div id="overlayStatus" class="overlay">
+                    <div class="overlay__modal">
+                        <button id="closeBtn" class="overlay__close">×</button>
+                        <h4 class="overlay__title">Selecciona el estado:</h4>
                         <div class="overlay__buttons">
                             <button
                                 type="button"
                                 class="btn btn--choose"
-                                id="btnWantToRead"
+                                data-status="pending"
                             >
                                 Pendiente de leer
                             </button>
                             <button
                                 type="button"
                                 class="btn btn--choose"
-                                id="btnReading"
+                                data-status="inProgress"
                             >
                                 Leyendo
                             </button>
                             <button
                                 type="button"
                                 class="btn btn--choose"
-                                id="btnRead"
+                                data-status="read"
                             >
                                 Leído
                             </button>
                             <button
                                 type="button"
                                 class="btn btn--choose"
-                                id="btnNotFinished"
+                                data-status="notFinished"
                             >
                                 Sin terminar
                             </button>

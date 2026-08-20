@@ -1,8 +1,6 @@
 const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 import { API_KEY } from "./config.js";
 
-const array = new Uint32Array(1);
-
 export class Book {
     constructor(
         id,
@@ -13,6 +11,7 @@ export class Book {
         cover = null,
         publishedDate = null,
         publisher = null,
+        status = null,
     ) {
         this.id = id;
         this.title = title;
@@ -22,13 +21,13 @@ export class Book {
         this.cover = cover;
         this.publishedDate = publishedDate;
         this.publisher = publisher;
-        this.status = null;
+        this.status = status;
         this.rating = null;
         this.dataAdded = new Date().toISOString();
     }
 
     changeStatus(newStatus) {
-        const status = [null, "pending", "inProgress", "read"];
+        const status = [null, "pending", "inProgress", "read", "notFinished"];
         if (!status.includes(newStatus)) {
             throw new Error(`Estado incorrecto`);
         }
@@ -51,7 +50,7 @@ export class Book {
         }
     }
 
-    static createFromGoogleBooks(data) {
+    static createFromGoogleBooks(data, status = null) {
         return new Book(
             data.id,
             data.title,
@@ -61,6 +60,7 @@ export class Book {
             data.imageLinks,
             data.publishedDate,
             data.publisher,
+            status,
         );
     }
 }
