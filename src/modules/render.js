@@ -21,7 +21,7 @@ export function printBooksFromSearch(books) {
                     ? book.volumeInfo.authors.join()
                     : "Autor desconocido";
             const image = setImages(
-                book.volumeInfo.imageLinks,
+                setSecuredImages(book.volumeInfo.imageLinks),
                 title,
                 "book-card__image",
             );
@@ -48,7 +48,7 @@ export function printBookInfo(book) {
     const processedBook = processBookData(book);
 
     const image = setImages(
-        processedBook.imageLinks,
+        setSecuredImages(processedBook.imageLinks),
         processedBook.title,
         "book-info__image",
     );
@@ -105,10 +105,16 @@ export function printBooksFromStorage(books) {
             const title = book.title;
             const subtitle = book.subtitle;
             const author = book.author;
-            const cover = setImages(book.cover, book.title, "book-card__image");
+            const cover = setImages(
+                setSecuredImages(book.cover),
+                book.title,
+                "book-card__image",
+            );
+            const status = book.status;
 
             return `<article class="book-card">
                         <a class="book-card__link" href="./book.html?id=${id}" title="${title}">
+                            ${status != null ? `<div class="book-card__status">${printStatus(status)}</div>` : ""}
                             <picture class="book-card__picture">
                                 ${cover}
                             </picture>
@@ -177,4 +183,26 @@ function setImages(imageLinks, title, extraClases) {
             alt="Portada de ${title}" 
             loading="eager"
             >`;
+}
+
+function printStatus(status) {
+    const statusMap = {
+        pending: "Pendiente",
+        want: "Pendiente",
+        inProgress: "Leyendo",
+        notFinished: "Sin terminar",
+    };
+
+    return statusMap[status] ?? null;
+}
+
+function setSecuredImages(images) {
+    return Object.fromEntries(
+        Object.entries(images).map(([property, value]) => [
+            property,
+            typeof value === "string"
+                ? value.replace("http://", "https://")
+                : value,
+        ]),
+    );
 }

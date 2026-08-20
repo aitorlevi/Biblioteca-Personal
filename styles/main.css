@@ -279,6 +279,20 @@ label {
         height: 100%;
         width: 100%;
         padding: var(--spacing-md);
+        position: relative;
+
+        .book-card__status {
+            position: absolute;
+            top: var(--spacing-md);
+            left: var(--spacing-md);
+            background-color: var(--accent-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            color: var(--color-background-soft);
+            text-transform: uppercase;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
 
         .book-card__picture {
             width: 100%;
