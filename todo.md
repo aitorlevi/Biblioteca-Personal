@@ -13,7 +13,7 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 - [x] Add book to shelf - createFromGoogleBooks()
 - [x] Set storage.js - Save, read, update and remove books from localStorage
 - [x] Connect button to add book to shelf
-- [] Add to library stablish status
+- [x] Add to library stablish status
 
 ### SHELF PAGE
 
@@ -21,3 +21,9 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 - [x] Print books from localStorage
 - [] Update status from shelf page
 - [] Remove book from shelf
+
+### EXTRA
+
+- [] Loading status
+- [] Show alerts for errors and success
+- [] Rate books from shelf page
