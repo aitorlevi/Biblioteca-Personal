@@ -156,6 +156,11 @@ select {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    .main-header__container {
+        display: flex;
+        justify-content: space-between;
+    }
 }
 
 .main-content {
@@ -240,6 +245,17 @@ label {
 }
 
 /* ----- CONTENT ----- */
+
+.menu {
+    display: flex;
+    align-items: center;
+    font-size: calc(var(--font-size-base) * 1.5);
+    text-transform: uppercase;
+
+    :hover {
+        text-decoration: underline;
+    }
+}
 
 .form-container {
     max-width: 800px;
