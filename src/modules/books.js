@@ -109,9 +109,12 @@ export function processBookData(rawData) {
         subtitle: rawData.volumeInfo.subtitle ?? null,
         author:
             rawData.volumeInfo.authors && rawData.volumeInfo.authors.length > 0
-                ? rawData.volumeInfo.authors.join()
+                ? rawData.volumeInfo.authors.join(", ")
                 : "Autor desconocido",
-        price: `${rawData.saleInfo.listPrice.amount} ${rawData.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`,
+        price:
+            rawData.saleInfo.saleability === "FOR_SALE"
+                ? `${rawData.saleInfo.listPrice.amount} ${rawData.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`
+                : "No está a la venta",
         isbn:
             rawData.volumeInfo.industryIdentifiers[1].identifier ??
             rawData.volumeInfo.industryIdentifiers[0].identifier,

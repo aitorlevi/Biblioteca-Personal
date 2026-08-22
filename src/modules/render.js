@@ -67,7 +67,7 @@ export function printBookInfo(book) {
                                 <h2>${processedBook.title}</h2>
                                 ${processedBook.subtitle ? `<h4>${processedBook.subtitle}</h4>` : ""}
                                 <h4>${processedBook.author}</h4>
-                                <h5>Precio aproximado en librerías: ${processedBook.price}</h5>
+                                <h5 class="book-info__price">Precio aproximado en librerías: <span class="book-info__money">${processedBook.price}</span></h5>
                             </div>
                             <div class="book-info__buttons">
                                 <button class="btn btn__primary" id="addToLibraryBtn">
@@ -79,19 +79,23 @@ export function printBookInfo(book) {
                     <div class="book__data">
                         <h3 class="book__data-title">DATOS DEL LIBRO</h3>
                         <ul class="book__data-list">
-                            <li class="book__data-item"><b>ISBN</b>: ${processedBook.isbn}</li>
-                            <li class="book__data-item"><b>Fecha de publicación</b>: ${processedBook.publishedDate}</li>
-                            <li class="book__data-item"><b>Editorial</b>: ${processedBook.publisher}</li>
-                            <li class="book__data-item"><b>Géneros</b>: ${processedBook.categories}</li>
-                            <li class="book__data-item"><b>Número de páginas</b>: ${processedBook.pageCount}</li>
+                            ${processedBook.isbn ? `<li class="book__data-item"><b>ISBN</b>: ${processedBook.isbn}</li>` : ""}
+                            ${processedBook.publishedDate ? `<li class="book__data-item"><b>Fecha de publicación</b>: ${processedBook.publishedDate}</li>` : ""}
+                            ${processedBook.publisher ? `<li class="book__data-item"><b>Editorial</b>: ${processedBook.publisher}</li>` : ""}
+                            ${processedBook.categories ? `<li class="book__data-item"><b>Géneros</b>: ${processedBook.categories}</li>` : ""}
+                            ${processedBook.pageCount ? `<li class="book__data-item"><b>Número de páginas</b>: ${processedBook.pageCount}</li>` : ""}
                         </ul>
                     </div>
-                    <div class="book__summary">
-                        <h3>DESCRIPCIÓN</h3>
-                        <div class="book__summary-copy">
-                            ${processedBook.description}
-                        </div>
-                    </div>`;
+                    ${
+                        processedBook.description
+                            ? `<div class="book__description">
+                                    <h3>DESCRIPCIÓN</h3>
+                                    <div class="book__description-copy">
+                                        ${processedBook.description}
+                                    </div>
+                                </div>`
+                            : ""
+                    }`;
 }
 
 export function printBooksFromStorage(books) {

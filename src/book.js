@@ -15,7 +15,8 @@ if (id) {
             currentRawData = processBookData(book);
             printBookInfo(book);
         })
-        .catch(() => {
+        .catch((error) => {
+            console.error(error);
             document.querySelector("#bookInfo").innerHTML =
                 "<p>No se ha podido cargar el libro.</p>";
         });
