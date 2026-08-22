@@ -1,23 +1,36 @@
 const overlayStatus = document.querySelector("#overlayStatus");
-const closeOverlayBtn = document.querySelector("#closeBtn");
+const overlayRemove = document.querySelector("#overlayRemove");
 
-const btnWantToReadBtn = document.querySelector("#btnWantToRead");
-const btnReadingBtn = document.querySelector("#btnReading");
-const btnReadBtn = document.querySelector("#btnRead");
-const btnNotFinishedBtn = document.querySelector("#btnNotFinished");
+const overlayStatusCloseBtn = document.querySelector("#overlayStatusCloseBtn");
+const closeOverlayRemoveBtn = document.querySelector("#overlayRemoveCloseBtn");
 
-export function openOverlay() {
+export function openUpdateStatusOverlay() {
     overlayStatus.classList.add("show");
 }
 
-export function closeOverlay() {
+export function closeUpdateStatusOverlay() {
     overlayStatus.classList.remove("show");
 }
 
-overlayStatus.addEventListener("click", function (event) {
+export function openRemoveBookOverlay() {
+    overlayRemove.classList.add("show");
+}
+
+export function closeRemoveBookOverlay() {
+    overlayRemove.classList.remove("show");
+}
+
+overlayStatus?.addEventListener("click", function (event) {
     if (event.target === overlayStatus) {
-        closeOverlay();
+        closeUpdateStatusOverlay();
     }
 });
 
-closeOverlayBtn.addEventListener("click", closeOverlay);
+overlayRemove?.addEventListener("click", function (event) {
+    if (event.target === overlayRemove) {
+        closeRemoveBookOverlay();
+    }
+});
+
+overlayStatusCloseBtn?.addEventListener("click", closeUpdateStatusOverlay);
+closeOverlayRemoveBtn?.addEventListener("click", closeRemoveBookOverlay);

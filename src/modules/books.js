@@ -26,14 +26,6 @@ export class Book {
         this.dataAdded = new Date().toISOString();
     }
 
-    changeStatus(newStatus) {
-        const status = [null, "pending", "inProgress", "read", "notFinished"];
-        if (!status.includes(newStatus)) {
-            throw new Error(`Estado incorrecto`);
-        }
-        this.status = newStatus;
-    }
-
     rate(newRate) {
         if (typeof newRate != Number || newRate < 1 || newRate > 10) {
             throw new Error(`Valoración incorrecta`);

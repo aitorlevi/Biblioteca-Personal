@@ -7,8 +7,8 @@
     --color-background-secondary: #dfb6b2;
     --color-text: #190019;
 
-    --accent-primary: #2b124c;
-    --accent-secondary: #522b5b;
+    --color-accent-primary: #2b124c;
+    --color-accent-secondary: #522b5b;
 
     --color-white: #ffffff;
     --color-black: #000000;
@@ -189,13 +189,13 @@ select {
 
 .btn {
     display: inline-block;
-    background-color: var(--accent-primary);
+    background-color: var(--color-accent-primary);
     color: var(--color-white);
     padding: var(--spacing-sm) var(--spacing-md);
     border-radius: var(--radius-sm);
     text-decoration: none;
     font-weight: bold;
-    border: 1px solid var(--accent-primary);
+    border: 1px solid var(--color-accent-primary);
     transition: var(--transition-fast);
     font-size: var(--font-size-base);
     height: calc(var(--spacing-md) * 2.5);
@@ -203,18 +203,17 @@ select {
 }
 
 .btn:hover {
-    background-color: var(--accent-secondary);
+    background-color: var(--color-accent-secondary);
 }
 
 .btn--choose {
     background-color: transparent;
 
     color: var(--color-text);
-    border: 2px solid var(--accent-primary);
+    border: 2px solid var(--color-accent-primary);
 }
 
 .btn--choose:hover {
-    /* border: 3px solid var(--accent-primary); */
     background-color: var(--color-background-secondary);
 }
 
@@ -231,7 +230,7 @@ input {
 }
 
 input:focus {
-    outline: solid var(--accent-secondary);
+    outline: solid var(--color-accent-secondary);
     outline-width: 2px;
 }
 
@@ -297,12 +296,13 @@ label {
         width: 100%;
         padding: var(--spacing-md);
         position: relative;
+        cursor: default;
 
         .book-card__status {
             position: absolute;
             top: var(--spacing-md);
             left: var(--spacing-md);
-            background-color: var(--accent-secondary);
+            background-color: var(--color-accent-secondary);
             border-radius: var(--radius-md);
             padding: var(--spacing-xs) var(--spacing-sm);
             color: var(--color-background-soft);
@@ -314,6 +314,7 @@ label {
         .book-card__picture {
             width: 100%;
             margin-bottom: var(--spacing-sm);
+            cursor: pointer;
         }
 
         .book-card__image {
@@ -349,6 +350,19 @@ label {
             font-weight: 600;
             margin-top: auto;
             margin-bottom: 0;
+        }
+
+        .book-card__buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-sm);
+            width: 100%;
+
+            .btn {
+                font-size: var(--font-size-sm);
+                height: auto;
+            }
         }
     }
 }

@@ -17,23 +17,46 @@ export function addBookToShelf(book) {
     localStorage.setItem("collection", JSON.stringify(currentCollection));
 }
 
-export function deleteBookFromShelf(bookId) {
+export function removeBookFromShelf(bookId) {
     const currentCollection =
         JSON.parse(localStorage.getItem("collection")) || [];
 
-    const bookPosition = currentCollection.findIndex((book) => book.id === id);
+    const bookPosition = currentCollection.findIndex(
+        (book) => book.id === bookId,
+    );
 
     if (bookPosition >= 0) {
+        console.log(bookPosition);
         currentCollection.splice(bookPosition, 1);
     } else {
         // TODO: Añadir alerta
         console.info("Este libro no esta en la colección");
+        return false;
     }
 
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+    return true;
 }
 
-export function updateBookFromShelf() {}
+export function updateStatusBookFromShelf(bookId, newStatus) {
+    const currentCollection =
+        JSON.parse(localStorage.getItem("collection")) || [];
+
+    const bookPosition = currentCollection.findIndex(
+        (book) => book.id === bookId,
+    );
+
+    if (bookPosition >= 0) {
+        currentCollection[bookPosition].status = newStatus;
+    } else {
+        // TODO: Añadir alerta
+        console.info("Este libro no esta en la colección");
+        return false;
+    }
+
+    localStorage.setItem("collection", JSON.stringify(currentCollection));
+    return true;
+}
 
 export function getBooksFromShelf() {
     const currentCollection =

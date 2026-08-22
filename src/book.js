@@ -1,5 +1,8 @@
 import { Book, getBook, processBookData } from "./modules/books.js";
-import { closeOverlay, openOverlay } from "./modules/overlay.js";
+import {
+    closeUpdateStatusOverlay,
+    openUpdateStatusOverlay,
+} from "./modules/overlay.js";
 import { printBookInfo } from "./modules/render.js";
 import { addBookToShelf } from "./modules/storage.js";
 
@@ -38,13 +41,13 @@ function addStatus(status) {
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         if (addStatus(button.dataset.status)) {
-            closeOverlay();
+            closeUpdateStatusOverlay();
         }
     });
 });
 
 bookInfoContainer.addEventListener("click", (event) => {
     if (event.target && event.target.matches("#addToLibraryBtn")) {
-        openOverlay();
+        openUpdateStatusOverlay();
     }
 });

@@ -19,8 +19,8 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 
 - [x] Create collection.html
 - [x] Print books from localStorage
-- [] Update status from shelf page
-- [] Remove book from shelf
+- [x] Update status from shelf page
+- [x] Remove book from shelf
 
 ### EXTRA
 

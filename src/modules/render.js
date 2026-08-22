@@ -116,16 +116,26 @@ export function printBooksFromStorage(books) {
             );
             const status = book.status;
 
-            return `<article class="book-card">
-                        <a class="book-card__link" href="./book.html?id=${id}" title="${title}">
+            return `<article class="book-card" data-id="${id}">
+                        <div class="book-card__link">
                             ${status != null ? `<div class="book-card__status">${printStatus(status)}</div>` : ""}
+                            <a  href="./book.html?id=${id}">
                             <picture class="book-card__picture">
                                 ${cover}
                             </picture>
+                            </a>
                             <h3 class="book-card__title">${title}</h3>
                             ${subtitle ? `<h4 class="book-card__subtitle">${subtitle}</h4>` : ""}
                             <h4 class="book-card__author">${author}</h4>
-                        </a>
+                            <div class="book-card__buttons">
+                                <button class="book-card__btn btn btn--choose" id="updateStatusBtn" data-id="${id}">
+                                    Actualizar estado
+                                </button>
+                                 <button class="book-card__btn btn btn--choose" id="removeBtn" data-id="${id}">
+                                    Quitar de la biblioteca
+                                </button>
+                            </div>
+                        </div>
                     </article>`;
         })
         .join("");
@@ -184,7 +194,8 @@ function setImages(imageLinks, title, extraClases) {
             <img 
             src="${defaultSrc}" 
             class="img${extraClases ? ` ${extraClases}` : ""}"
-            alt="Portada de ${title}" 
+            alt="Portada de ${title}"
+            title="${title}" 
             loading="eager"
             >`;
 }
@@ -192,8 +203,8 @@ function setImages(imageLinks, title, extraClases) {
 function printStatus(status) {
     const statusMap = {
         pending: "Pendiente",
-        want: "Pendiente",
         inProgress: "Leyendo",
+        read: "Leído",
         notFinished: "Sin terminar",
     };
 
