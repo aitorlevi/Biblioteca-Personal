@@ -10,6 +10,7 @@ import {
     openRemoveBookOverlay,
     openUpdateStatusOverlay,
 } from "./modules/overlay.js";
+import { showAlert } from "./modules/alert.js";
 
 const bookShelfContainer = document.querySelector("#bookShelf");
 const overlay = document.querySelector("#overlayStatus");
@@ -33,7 +34,7 @@ function updateStatus(status) {
         return false;
     }
 
-    updateStatusBookFromShelf(targetUpdateStatus, status);
+    updateStatusBookFromShelf(targetBook, status);
     return true;
 }
 
@@ -50,8 +51,10 @@ bookShelfContainer.addEventListener("click", (event) => {
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         if (updateStatus(button.dataset.status)) {
-            closeOverlay();
-            location.reload();
+            closeUpdateStatusOverlay();
+            showAlert("success", "Estado actualizado con éxito");
+        } else {
+            showAlert("error", "No se ha podido actualizar el estado");
         }
     });
 });
@@ -59,7 +62,7 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
 btnCloseRemoveOverlay.addEventListener("click", closeRemoveBookOverlay);
 btnConfirmRemove.addEventListener("click", () => {
     if (removeBookFromShelf(targetBook)) {
-        closeOverlay();
+        closeRemoveBookOverlay();
         location.reload();
     }
 });

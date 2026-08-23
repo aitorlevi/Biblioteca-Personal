@@ -508,9 +508,17 @@ label {
     left: 50%;
     transform: translateX(-50%);
     width: auto;
-    max-width: 250px;
+    min-width: 280px;
+    max-width: 400px;
     background-color: var(--color-info);
     color: var(--color-text);
+    text-align: center;
+    padding: var(--spacing-sm) var(--spacing-sm);
+    display: none;
+
+    &.show {
+        display: flex;
+    }
 }
 
 .alert--success {
