@@ -1,3 +1,4 @@
+import { showAlert } from "./modules/alert.js";
 import { Book, getBook, processBookData } from "./modules/books.js";
 import {
     closeUpdateStatusOverlay,
@@ -20,8 +21,10 @@ if (id) {
         })
         .catch((error) => {
             console.error(error);
-            document.querySelector("#bookInfo").innerHTML =
-                "<p>No se ha podido cargar el libro.</p>";
+            showAlert(
+                "error",
+                "No se ha podido cargar el libro. Por favor, prueba de nuevo.",
+            );
         });
 }
 
@@ -29,19 +32,28 @@ function addStatus(status) {
     const validStatuses = ["pending", "inProgress", "read", "notFinished"];
 
     if (!validStatuses.includes(status)) {
-        console.error("Estado no disponible");
         return false;
     }
 
     const book = Book.createFromGoogleBooks(currentRawData, status);
-    addBookToShelf(book);
-    return true;
+
+    if (addBookToShelf(book)) {
+        return true;
+    } else {
+        showAlert("info", "El libro ya está añadido en la biblioteca");
+    }
 }
 
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         if (addStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
+            showAlert("success", "Libro añadido a la biblioteca.");
+        } else {
+            showAlert(
+                "error",
+                "El libro no se ha podido añadir a la biblioteca.",
+            );
         }
     });
 });

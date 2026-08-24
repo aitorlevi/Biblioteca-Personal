@@ -3,9 +3,8 @@ import { processBookData } from "./books.js";
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
 export function printBooksFromSearch(books) {
-    console.log("printBooksFromSearch");
-    console.log(books);
     const container = document.querySelector("#searchResults");
+
     container.innerHTML = books
         .filter(
             (book) =>
@@ -41,8 +40,6 @@ export function printBooksFromSearch(books) {
 }
 
 export function printBookInfo(book) {
-    console.log("printBookInfo");
-    console.log(book);
     const container = document.querySelector("#bookInfo");
 
     const processedBook = processBookData(book);
@@ -99,10 +96,8 @@ export function printBookInfo(book) {
 }
 
 export function printBooksFromStorage(books) {
-    console.log("printBooksFromStorage");
-    console.log(books);
-
     const container = document.querySelector("#bookShelf");
+
     container.innerHTML = books
         .map((book) => {
             const id = book.id;
@@ -139,26 +134,6 @@ export function printBooksFromStorage(books) {
                     </article>`;
         })
         .join("");
-}
-
-// TODO: Borrar, solo se usa para probar
-function compareImages(imagesToCompare, image) {
-    switch (image) {
-        case imagesToCompare.extraLarge:
-            return "extraLarge";
-        case imagesToCompare.large:
-            return "large";
-        case imagesToCompare.medium:
-            return "medium";
-        case imagesToCompare.small:
-            return "small";
-        case imagesToCompare.smallThumbnail:
-            return "smallThumbnail";
-        case imagesToCompare.thumbnail:
-            return "thumbnail";
-        default:
-            return "default";
-    }
 }
 
 function setImages(imageLinks, title, extraClases) {

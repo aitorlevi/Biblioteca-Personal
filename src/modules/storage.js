@@ -7,14 +7,13 @@ export function addBookToShelf(book) {
     );
 
     if (isAlready) {
-        // TODO: Añadir alerta
-        console.info("Libro ya en la lista");
-        return;
+        return false;
     }
 
     currentCollection.push(book);
-
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+
+    return true;
 }
 
 export function removeBookFromShelf(bookId) {
@@ -25,16 +24,13 @@ export function removeBookFromShelf(bookId) {
         (book) => book.id === bookId,
     );
 
-    if (bookPosition >= 0) {
-        console.log(bookPosition);
-        currentCollection.splice(bookPosition, 1);
-    } else {
-        // TODO: Añadir alerta
-        console.info("Este libro no esta en la colección");
+    if (bookPosition < 0) {
         return false;
     }
 
+    currentCollection.splice(bookPosition, 1);
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+
     return true;
 }
 
@@ -46,15 +42,13 @@ export function updateStatusBookFromShelf(bookId, newStatus) {
         (book) => book.id === bookId,
     );
 
-    if (bookPosition >= 0) {
-        currentCollection[bookPosition].status = newStatus;
-    } else {
-        // TODO: Añadir alerta
-        console.info("Este libro no esta en la colección");
+    if (bookPosition < 0) {
         return false;
     }
 
+    currentCollection[bookPosition].status = newStatus;
     localStorage.setItem("collection", JSON.stringify(currentCollection));
+
     return true;
 }
 

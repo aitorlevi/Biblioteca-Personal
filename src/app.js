@@ -1,3 +1,4 @@
+import { showAlert } from "./modules/alert.js";
 import { searchBooks } from "./modules/books.js";
 import { printBooksFromSearch } from "./modules/render.js";
 
@@ -10,8 +11,11 @@ form.addEventListener("submit", async (e) => {
 
     searchBooks(title)
         .then((books) => printBooksFromSearch(books))
-        .catch(() => {
-            document.querySelector("#searchResult").innerHTML =
-                "<p>No se ha podido realizar la búsqueda.</p>";
+        .catch((error) => {
+            console.error(error);
+            showAlert(
+                "error",
+                "No se ha podido realizar la búsqueda. Por favor, prueba de nuevo.",
+            );
         });
 });
