@@ -3,6 +3,9 @@ import { processBookData } from "./books.js";
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
 export function printBooksFromSearch(books) {
+    if (!books) {
+        return;
+    }
     const container = document.querySelector("#searchResults");
 
     container.innerHTML = books
@@ -40,6 +43,9 @@ export function printBooksFromSearch(books) {
 }
 
 export function printBookInfo(book) {
+    if (!book) {
+        return;
+    }
     const container = document.querySelector("#bookInfo");
 
     const processedBook = processBookData(book);
@@ -96,6 +102,9 @@ export function printBookInfo(book) {
 }
 
 export function printBooksFromStorage(books) {
+    if (!books) {
+        return;
+    }
     const container = document.querySelector("#bookShelf");
 
     container.innerHTML = books

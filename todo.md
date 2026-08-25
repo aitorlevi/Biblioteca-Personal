@@ -25,5 +25,5 @@ https://www.figma.com/proto/vBE36B8Wxx0ITxIj6vQTTc/Prorotipado---Reto-3?node-id=
 ### EXTRA
 
 - [] Loading status
-- [] Show alerts for errors and success
+- [x] Show alerts for errors and success
 - [] Rate books from shelf page

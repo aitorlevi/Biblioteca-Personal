@@ -21,13 +21,12 @@ const btnCloseRemoveOverlay = document.querySelector("#closeRemoveOverlayBtn");
 
 function showBooks() {
     const books = getBooksFromShelf();
-    console.log("Books", books);
     if (books.length > 0) {
         printBooksFromStorage(books);
     } else {
         showAlert(
             "info",
-            "Actualmente no tienes libros añadidos a la biblioteca",
+            "Actualmente no tienes libros añadidos en la biblioteca",
         );
     }
 }
