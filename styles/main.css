@@ -450,7 +450,8 @@ label {
     }
 }
 
-.overlay {
+.overlay,
+.loader {
     display: none;
     position: fixed;
     top: 0;
@@ -501,6 +502,11 @@ label {
         flex-direction: column;
         gap: var(--spacing-md);
     }
+}
+
+.loader {
+    z-index: 1010;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .alert {
@@ -558,6 +564,32 @@ label {
 
     i {
         color: var(--color-info);
+    }
+}
+
+.spinner {
+    --spinner-size: 4.5rem;
+    --spinner-border: 0.46875rem;
+
+    width: var(--spinner-size);
+    height: var(--spinner-size);
+    border: var(--spinner-border) solid var(--color-background);
+    border-bottom-color: var(--color-accent-primary);
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    position: relative;
+    top: calc(50% - (var(--spinner-size) / 2));
+    left: calc(50% - (var(--spinner-size) / 2));
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
 

@@ -11,6 +11,7 @@ import {
     openUpdateStatusOverlay,
 } from "./modules/overlay.js";
 import { showAlert } from "./modules/alert.js";
+import { hideLoader, showLoader } from "./modules/loader.js";
 
 const bookShelfContainer = document.querySelector("#bookShelf");
 const overlay = document.querySelector("#overlayStatus");
@@ -54,6 +55,7 @@ bookShelfContainer.addEventListener("click", (event) => {
 });
 
 overlay.querySelectorAll("[data-status]").forEach((button) => {
+    showLoader();
     button.addEventListener("click", () => {
         if (updateStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
@@ -62,16 +64,19 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
             showAlert("error", "No se ha podido actualizar el estado.");
         }
     });
+    hideLoader();
 });
 
 btnCloseRemoveOverlay.addEventListener("click", closeRemoveBookOverlay);
 btnConfirmRemove.addEventListener("click", () => {
+    showLoader();
     if (removeBookFromShelf(targetBook)) {
         closeRemoveBookOverlay();
         showAlert("success", "Libro eliminado de la biblioteca.");
     } else {
         showAlert("error", "No se ha podido eliminar el libro.");
     }
+    hideLoader();
 });
 
 showBooks();

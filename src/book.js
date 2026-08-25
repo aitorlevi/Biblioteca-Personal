@@ -1,5 +1,6 @@
 import { showAlert } from "./modules/alert.js";
 import { Book, getBook, processBookData } from "./modules/books.js";
+import { hideLoader, showLoader } from "./modules/loader.js";
 import {
     closeUpdateStatusOverlay,
     openUpdateStatusOverlay,
@@ -14,6 +15,7 @@ const overlay = document.querySelector("#overlayStatus");
 let currentRawData = null;
 
 if (id) {
+    showLoader();
     getBook(id)
         .then((book) => {
             currentRawData = processBookData(book);
@@ -26,6 +28,9 @@ if (id) {
                 "No se ha podido cargar el libro. Por favor, prueba de nuevo.",
             );
         });
+    hideLoader();
+} else {
+    showAlert("error", "El libro que se está intentando cargar no existe.");
 }
 
 function addStatus(status) {
@@ -46,6 +51,7 @@ function addStatus(status) {
 
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
+        showLoader();
         if (addStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
             showAlert("success", "Libro añadido a la biblioteca.");
@@ -55,6 +61,7 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
                 "El libro no se ha podido añadir a la biblioteca.",
             );
         }
+        hideLoader();
     });
 });
 
