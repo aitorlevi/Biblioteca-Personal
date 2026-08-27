@@ -29,13 +29,13 @@ export function printBooksFromSearch(books) {
             );
 
             return `<article class="book-card">
-                        <a class="book-card__link" href="./book.html?id=${id}" title="${title}">
+                        <a class="book-card__link" href="./book.html?id=${encodeURIComponent(id)}" title="${escapeHtml(title)}">
                             <picture class="book-card__picture">
                                 ${image}
                             </picture>
-                            <h3 class="book-card__title">${title}</h3>
-                            ${subtitle ? `<h4 class="book-card__subtitle">${subtitle}</h4>` : ""}
-                            <h4 class="book-card__author">${authors}</h4>
+                            <h3 class="book-card__title">${escapeHtml(title)}</h3>
+                            ${subtitle ? `<h4 class="book-card__subtitle">${escapeHtml(subtitle)}</h4>` : ""}
+                            <h4 class="book-card__author">${escapeHtml(authors)}</h4>
                         </a>
                     </article>`;
         })
@@ -57,7 +57,7 @@ export function printBookInfo(book) {
     );
 
     const pageTitle = document.querySelector("#pageTitle");
-    pageTitle.innerHTML = `AitorTeca - ${processedBook.title}`;
+    pageTitle.textContent = `AitorTeca - ${processedBook.title}`;
 
     container.innerHTML = `<div class="book-info__main">
                         <div class="book-info__image-container">
@@ -67,10 +67,10 @@ export function printBookInfo(book) {
                         </div>
                         <div class="book-info__titles">
                             <div class="book-info__copy">
-                                <h2>${processedBook.title}</h2>
-                                ${processedBook.subtitle ? `<h4>${processedBook.subtitle}</h4>` : ""}
-                                <h4>${processedBook.author}</h4>
-                                <h5 class="book-info__price">Precio aproximado en librerías: <span class="book-info__money">${processedBook.price}</span></h5>
+                                <h2>${escapeHtml(processedBook.title)}</h2>
+                                ${processedBook.subtitle ? `<h4>${escapeHtml(processedBook.subtitle)}</h4>` : ""}
+                                <h4>${escapeHtml(processedBook.author)}</h4>
+                                <h5 class="book-info__price">Precio aproximado en librerías: <span class="book-info__money">${escapeHtml(processedBook.price)}</span></h5>
                             </div>
                             <div class="book-info__buttons">
                                 <button class="btn btn__primary" id="addToLibraryBtn">
@@ -82,11 +82,11 @@ export function printBookInfo(book) {
                     <div class="book__data">
                         <h3 class="book__data-title">DATOS DEL LIBRO</h3>
                         <ul class="book__data-list">
-                            ${processedBook.isbn ? `<li class="book__data-item"><b>ISBN</b>: ${processedBook.isbn}</li>` : ""}
-                            ${processedBook.publishedDate ? `<li class="book__data-item"><b>Fecha de publicación</b>: ${processedBook.publishedDate}</li>` : ""}
-                            ${processedBook.publisher ? `<li class="book__data-item"><b>Editorial</b>: ${processedBook.publisher}</li>` : ""}
-                            ${processedBook.categories ? `<li class="book__data-item"><b>Géneros</b>: ${processedBook.categories}</li>` : ""}
-                            ${processedBook.pageCount ? `<li class="book__data-item"><b>Número de páginas</b>: ${processedBook.pageCount}</li>` : ""}
+                            ${processedBook.isbn ? `<li class="book__data-item"><b>ISBN</b>: ${escapeHtml(processedBook.isbn)}</li>` : ""}
+                            ${processedBook.publishedDate ? `<li class="book__data-item"><b>Fecha de publicación</b>: ${escapeHtml(processedBook.publishedDate)}</li>` : ""}
+                            ${processedBook.publisher ? `<li class="book__data-item"><b>Editorial</b>: ${escapeHtml(processedBook.publisher)}</li>` : ""}
+                            ${processedBook.categories ? `<li class="book__data-item"><b>Géneros</b>: ${escapeHtml(processedBook.categories)}</li>` : ""}
+                            ${processedBook.pageCount ? `<li class="book__data-item"><b>Número de páginas</b>: ${escapeHtml(processedBook.pageCount)}</li>` : ""}
                         </ul>
                     </div>
                     ${
@@ -94,7 +94,7 @@ export function printBookInfo(book) {
                             ? `<div class="book__description">
                                     <h3>DESCRIPCIÓN</h3>
                                     <div class="book__description-copy">
-                                        ${processedBook.description}
+                                        ${escapeHtml(processedBook.description)}
                                     </div>
                                 </div>`
                             : ""
@@ -120,22 +120,22 @@ export function printBooksFromStorage(books) {
             );
             const status = book.status;
 
-            return `<article class="book-card" data-id="${id}">
+            return `<article class="book-card" data-id="${escapeHtml(id)}">
                         <div class="book-card__link">
                             ${status != null ? `<div class="book-card__status">${printStatus(status)}</div>` : ""}
-                            <a  href="./book.html?id=${id}">
+                            <a  href="./book.html?id=${encodeURIComponent(id)}">
                             <picture class="book-card__picture">
                                 ${cover}
                             </picture>
                             </a>
-                            <h3 class="book-card__title">${title}</h3>
-                            ${subtitle ? `<h4 class="book-card__subtitle">${subtitle}</h4>` : ""}
-                            <h4 class="book-card__author">${author}</h4>
+                            <h3 class="book-card__title">${escapeHtml(title)}</h3>
+                            ${subtitle ? `<h4 class="book-card__subtitle">${escapeHtml(subtitle)}</h4>` : ""}
+                            <h4 class="book-card__author">${escapeHtml(author)}</h4>
                             <div class="book-card__buttons">
-                                <button class="book-card__btn btn btn--choose" id="updateStatusBtn" data-id="${id}">
+                                <button class="book-card__btn btn btn--choose" id="updateStatusBtn" data-id="${escapeHtml(id)}">
                                     Actualizar estado
                                 </button>
-                                 <button class="book-card__btn btn btn--choose" id="removeBtn" data-id="${id}">
+                                 <button class="book-card__btn btn btn--choose" id="removeBtn" data-id="${escapeHtml(id)}">
                                     Quitar de la biblioteca
                                 </button>
                             </div>
@@ -146,40 +146,30 @@ export function printBooksFromStorage(books) {
 }
 
 function setImages(imageLinks, title, extraClases) {
-    let largeSrc, mediumSrc, defaultSrc;
+    const getImageUrl = (...sources) =>
+        sources.map(getSafeImageUrl).find(Boolean) ?? DEFAULT_BOOK_COVER;
+    const largeSrc = getImageUrl(
+        imageLinks?.large,
+        imageLinks?.medium,
+        imageLinks?.small,
+        imageLinks?.thumbnail,
+        imageLinks?.smallThumbnail,
+    );
+    const mediumSrc = getImageUrl(
+        imageLinks?.medium,
+        imageLinks?.small,
+        imageLinks?.smallThumbnail,
+        imageLinks?.thumbnail,
+    );
+    const defaultSrc = mediumSrc;
 
-    if (imageLinks) {
-        largeSrc =
-            imageLinks.large ||
-            imageLinks.medium ||
-            imageLinks.small ||
-            imageLinks.thumbnail ||
-            imageLinks.smallThumbnail ||
-            imageLinks.thumbnail ||
-            DEFAULT_BOOK_COVER;
-        mediumSrc =
-            imageLinks.medium ||
-            imageLinks.small ||
-            imageLinks.smallThumbnail ||
-            imageLinks.thumbnail ||
-            DEFAULT_BOOK_COVER;
-        defaultSrc =
-            imageLinks.medium ||
-            imageLinks.small ||
-            imageLinks.smallThumbnail ||
-            imageLinks.thumbnail ||
-            DEFAULT_BOOK_COVER;
-    } else {
-        largeSrc = mediumSrc = defaultSrc = DEFAULT_BOOK_COVER;
-    }
-
-    return `<source media="(min-width: 1024px)" srcset="${largeSrc}">
-            <source media="(min-width: 768px)" srcset="${mediumSrc}">
+    return `<source media="(min-width: 1024px)" srcset="${escapeHtml(largeSrc)}">
+            <source media="(min-width: 768px)" srcset="${escapeHtml(mediumSrc)}">
             <img 
-            src="${defaultSrc}" 
-            class="img${extraClases ? ` ${extraClases}` : ""}"
-            alt="Portada de ${title}"
-            title="${title}" 
+            src="${escapeHtml(defaultSrc)}" 
+            class="img${extraClases ? ` ${escapeHtml(extraClases)}` : ""}"
+            alt="Portada de ${escapeHtml(title)}"
+            title="${escapeHtml(title)}" 
             loading="eager"
             >`;
 }
@@ -207,5 +197,29 @@ function setSecuredImages(images) {
                 ? value.replace("http://", "https://")
                 : value,
         ]),
+    );
+}
+
+function getSafeImageUrl(value) {
+    if (typeof value !== "string") {
+        return null;
+    }
+
+    const securedValue = value.replace("http://", "https://");
+    return /^https:\/\//i.test(securedValue) ? securedValue : null;
+}
+
+function escapeHtml(value) {
+    const characters = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+    };
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        (character) => characters[character],
     );
 }
