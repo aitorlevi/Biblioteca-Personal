@@ -94,7 +94,7 @@ export function printBookInfo(book) {
                             ? `<div class="book__description">
                                     <h3>DESCRIPCIÓN</h3>
                                     <div class="book__description-copy">
-                                        ${escapeHtml(processedBook.description)}
+                                        ${sanitizeHtml(processedBook.description)}
                                     </div>
                                 </div>`
                             : ""
@@ -222,4 +222,76 @@ function escapeHtml(value) {
         /[&<>"']/g,
         (character) => characters[character],
     );
+}
+
+function sanitizeHtml(value) {
+    const allowedTags = new Set([
+        "P",
+        "BR",
+        "B",
+        "STRONG",
+        "I",
+        "EM",
+        "U",
+        "UL",
+        "OL",
+        "LI",
+        "BLOCKQUOTE",
+        "A",
+    ]);
+    const parser = new DOMParser();
+    const documentFragment = parser.parseFromString(
+        String(value ?? ""),
+        "text/html",
+    );
+
+    const sanitizeNode = (node) => {
+        Array.from(node.children).forEach((element) => {
+            if (!allowedTags.has(element.tagName)) {
+                if (
+                    ["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED"].includes(
+                        element.tagName,
+                    )
+                ) {
+                    element.remove();
+                    return;
+                }
+
+                while (element.firstChild) {
+                    element.parentNode.insertBefore(
+                        element.firstChild,
+                        element,
+                    );
+                }
+                element.remove();
+                return;
+            }
+
+            Array.from(element.attributes).forEach((attribute) => {
+                if (element.tagName !== "A" || attribute.name !== "href") {
+                    element.removeAttribute(attribute.name);
+                }
+            });
+
+            if (element.tagName === "A") {
+                const href = element.getAttribute("href");
+                let url;
+
+                try {
+                    url = new URL(href, document.baseURI);
+                } catch {
+                    url = null;
+                }
+
+                if (!url || !["http:", "https:"].includes(url.protocol)) {
+                    element.removeAttribute("href");
+                }
+            }
+
+            sanitizeNode(element);
+        });
+    };
+
+    sanitizeNode(documentFragment.body);
+    return documentFragment.body.innerHTML;
 }
