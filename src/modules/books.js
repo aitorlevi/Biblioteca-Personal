@@ -55,7 +55,7 @@ export async function searchBooks(title) {
         return data.items;
     } catch (error) {
         console.error("Hubo un problema con la búsqueda:", error);
-        return false;
+        throw error;
     }
 }
 
@@ -76,7 +76,7 @@ export async function getBook(id) {
             "Hubo un problema al cargar la información del libro: ",
             error,
         );
-        return false;
+        throw error;
     }
 }
 

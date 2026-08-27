@@ -22,9 +22,9 @@ const btnCloseRemoveOverlay = document.querySelector("#closeRemoveOverlayBtn");
 
 function showBooks() {
     const books = getBooksFromShelf();
-    if (books.length > 0) {
-        printBooksFromStorage(books);
-    } else {
+    printBooksFromStorage(books);
+
+    if (books.length === 0) {
         showAlert(
             "info",
             "Actualmente no tienes libros añadidos en la biblioteca",
@@ -40,8 +40,7 @@ function updateStatus(status) {
         return false;
     }
 
-    updateStatusBookFromShelf(targetBook, status);
-    return true;
+    return updateStatusBookFromShelf(targetBook, status);
 }
 
 bookShelfContainer.addEventListener("click", (event) => {
@@ -59,6 +58,7 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         if (updateStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
+            showBooks();
             showAlert("success", "Estado actualizado con éxito.");
         } else {
             showAlert("error", "No se ha podido actualizar el estado.");
@@ -72,6 +72,7 @@ btnConfirmRemove.addEventListener("click", () => {
     showLoader();
     if (removeBookFromShelf(targetBook)) {
         closeRemoveBookOverlay();
+        showBooks();
         showAlert("success", "Libro eliminado de la biblioteca.");
     } else {
         showAlert("error", "No se ha podido eliminar el libro.");
