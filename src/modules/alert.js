@@ -3,6 +3,11 @@ const alertMessage = document.querySelector("#alertMessage");
 export function showAlert(type, messageDescription) {
     let message = null;
     const safeMessage = escapeHtml(messageDescription);
+    alertMessage.classList.remove(
+        "alert--success",
+        "alert--error",
+        "alert--info",
+    );
     switch (type) {
         case "success":
             alertMessage.classList.add("alert--success");
