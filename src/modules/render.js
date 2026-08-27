@@ -196,6 +196,10 @@ function printStatus(status) {
 }
 
 function setSecuredImages(images) {
+    if (!images || typeof images !== "object") {
+        return null;
+    }
+
     return Object.fromEntries(
         Object.entries(images).map(([property, value]) => [
             property,
