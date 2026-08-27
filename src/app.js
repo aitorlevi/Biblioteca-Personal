@@ -19,6 +19,8 @@ form.addEventListener("submit", async (e) => {
                 "error",
                 "No se ha podido realizar la búsqueda. Por favor, prueba de nuevo.",
             );
+        })
+        .finally(() => {
+            hideLoader();
         });
-    hideLoader();
 });

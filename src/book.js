@@ -27,8 +27,10 @@ if (id) {
                 "error",
                 "No se ha podido cargar el libro. Por favor, prueba de nuevo.",
             );
+        })
+        .finally(() => {
+            hideLoader();
         });
-    hideLoader();
 } else {
     showAlert("error", "El libro que se está intentando cargar no existe.");
 }

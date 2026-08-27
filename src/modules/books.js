@@ -26,22 +26,6 @@ export class Book {
         this.dataAdded = new Date().toISOString();
     }
 
-    rate(newRate) {
-        if (typeof newRate != Number || newRate < 1 || newRate > 10) {
-            throw new Error(`Valoración incorrecta`);
-        }
-        this.rating = newRate;
-    }
-
-    static validate({ title, author }) {
-        if (!title && title.trim === "") {
-            throw new Error(`Título incorrecto`);
-        }
-        if (!author && author.trim === "") {
-            throw new Error(`Autor incorrecto`);
-        }
-    }
-
     static createFromGoogleBooks(data, status = null) {
         return new Book(
             data.id,
@@ -71,6 +55,7 @@ export async function searchBooks(title) {
         return data.items;
     } catch (error) {
         console.error("Hubo un problema con la búsqueda:", error);
+        return false;
     }
 }
 
@@ -91,34 +76,39 @@ export async function getBook(id) {
             "Hubo un problema al cargar la información del libro: ",
             error,
         );
+        return false;
     }
 }
 
 export function processBookData(rawData) {
+    const volumeInfo = rawData.volumeInfo ?? {};
+    const saleInfo = rawData.saleInfo ?? {};
+    const identifiers = volumeInfo.industryIdentifiers ?? [];
+    const listPrice = saleInfo.listPrice;
+
     return {
         id: rawData.id,
-        title: rawData.volumeInfo.title,
-        subtitle: rawData.volumeInfo.subtitle ?? null,
+        title: volumeInfo.title ?? "Título desconocido",
+        subtitle: volumeInfo.subtitle ?? null,
         author:
-            rawData.volumeInfo.authors && rawData.volumeInfo.authors.length > 0
-                ? rawData.volumeInfo.authors.join(", ")
+            volumeInfo.authors && volumeInfo.authors.length > 0
+                ? volumeInfo.authors.join(", ")
                 : "Autor desconocido",
         price:
-            rawData.saleInfo.saleability === "FOR_SALE"
-                ? `${rawData.saleInfo.listPrice.amount} ${rawData.saleInfo.listPrice.currencyCode === "EUR" ? "€" : " - moneda desconocida"}`
+            saleInfo.saleability === "FOR_SALE"
+                ? listPrice?.amount != null
+                    ? `${listPrice.amount} ${listPrice.currencyCode === "EUR" ? "€" : "- moneda desconocida"}`
+                    : "Precio no disponible"
                 : "No está a la venta",
-        isbn:
-            rawData.volumeInfo.industryIdentifiers[1].identifier ??
-            rawData.volumeInfo.industryIdentifiers[0].identifier,
-        publishedDate: rawData.volumeInfo.publishedDate,
-        publisher: rawData.volumeInfo.publisher,
-        pageCount: rawData.volumeInfo.pageCount,
+        isbn: identifiers[1]?.identifier ?? identifiers[0]?.identifier ?? null,
+        publishedDate: volumeInfo.publishedDate ?? null,
+        publisher: volumeInfo.publisher ?? null,
+        pageCount: volumeInfo.pageCount ?? null,
         categories:
-            rawData.volumeInfo.categories &&
-            rawData.volumeInfo.categories.length > 0
-                ? rawData.volumeInfo.categories.join()
+            volumeInfo.categories && volumeInfo.categories.length > 0
+                ? volumeInfo.categories.join()
                 : "",
-        description: rawData.volumeInfo.description,
-        imageLinks: rawData.volumeInfo.imageLinks,
+        description: volumeInfo.description ?? null,
+        imageLinks: volumeInfo.imageLinks ?? null,
     };
 }
