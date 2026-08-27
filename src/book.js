@@ -53,7 +53,6 @@ function addStatus(status) {
 
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
-        showLoader();
         if (addStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
             showAlert("success", "Libro añadido a la biblioteca.");
@@ -63,7 +62,6 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
                 "El libro no se ha podido añadir a la biblioteca.",
             );
         }
-        hideLoader();
     });
 });
 
