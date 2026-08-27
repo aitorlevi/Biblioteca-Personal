@@ -44,10 +44,10 @@ function updateStatus(status) {
 }
 
 bookShelfContainer.addEventListener("click", (event) => {
-    if (event.target && event.target.matches("#updateStatusBtn")) {
+    if (event.target && event.target.matches(".js-update-status")) {
         targetBook = event.target.dataset.id;
         openUpdateStatusOverlay();
-    } else if (event.target && event.target.matches("#removeBtn")) {
+    } else if (event.target && event.target.matches(".js-remove")) {
         targetBook = event.target.dataset.id;
         openRemoveBookOverlay();
     }

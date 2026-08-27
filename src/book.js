@@ -39,23 +39,32 @@ function addStatus(status) {
     const validStatuses = ["pending", "inProgress", "read", "notFinished"];
 
     if (!validStatuses.includes(status)) {
-        return false;
+        return { ok: false, reason: "invalidStatus" };
+    }
+
+    if (!currentRawData) {
+        return { ok: false, reason: "noData" };
     }
 
     const book = Book.createFromGoogleBooks(currentRawData, status);
 
-    if (addBookToShelf(book)) {
-        return true;
-    } else {
-        showAlert("info", "El libro ya está añadido en la biblioteca");
+    if (!addBookToShelf(book)) {
+        return { ok: false, reason: "duplicate" };
     }
+
+    return { ok: true };
 }
 
 overlay.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
-        if (addStatus(button.dataset.status)) {
+        const result = addStatus(button.dataset.status);
+
+        if (result.ok) {
             closeUpdateStatusOverlay();
             showAlert("success", "Libro añadido a la biblioteca.");
+        } else if (result.reason === "duplicate") {
+            closeUpdateStatusOverlay();
+            showAlert("info", "El libro ya está añadido en la biblioteca.");
         } else {
             showAlert(
                 "error",

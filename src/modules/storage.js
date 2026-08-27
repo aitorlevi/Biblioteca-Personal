@@ -1,5 +1,12 @@
 function getCollection() {
-    const storedCollection = localStorage.getItem("collection");
+    let storedCollection = null;
+
+    try {
+        storedCollection = localStorage.getItem("collection");
+    } catch (error) {
+        console.error("No se ha podido acceder al almacenamiento:", error);
+        return [];
+    }
 
     if (!storedCollection) {
         return [];
@@ -24,7 +31,13 @@ function getCollection() {
 }
 
 function saveCollection(collection) {
-    localStorage.setItem("collection", JSON.stringify(collection));
+    try {
+        localStorage.setItem("collection", JSON.stringify(collection));
+        return true;
+    } catch (error) {
+        console.error("No se ha podido guardar la colección:", error);
+        return false;
+    }
 }
 
 export function addBookToShelf(book) {
@@ -39,9 +52,8 @@ export function addBookToShelf(book) {
     }
 
     currentCollection.push(book);
-    saveCollection(currentCollection);
 
-    return true;
+    return saveCollection(currentCollection);
 }
 
 export function removeBookFromShelf(bookId) {
@@ -56,9 +68,8 @@ export function removeBookFromShelf(bookId) {
     }
 
     currentCollection.splice(bookPosition, 1);
-    saveCollection(currentCollection);
 
-    return true;
+    return saveCollection(currentCollection);
 }
 
 export function updateStatusBookFromShelf(bookId, newStatus) {
@@ -73,9 +84,8 @@ export function updateStatusBookFromShelf(bookId, newStatus) {
     }
 
     currentCollection[bookPosition].status = newStatus;
-    saveCollection(currentCollection);
 
-    return true;
+    return saveCollection(currentCollection);
 }
 
 export function getBooksFromShelf() {

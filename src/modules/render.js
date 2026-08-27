@@ -123,11 +123,11 @@ export function printBooksFromStorage(books) {
                 book.title,
                 "book-card__image",
             );
-            const status = book.status;
+            const statusLabel = printStatus(book.status);
 
             return `<article class="book-card" data-id="${escapeHtml(id)}">
                         <div class="book-card__link">
-                            ${status != null ? `<div class="book-card__status">${printStatus(status)}</div>` : ""}
+                            ${statusLabel ? `<div class="book-card__status">${escapeHtml(statusLabel)}</div>` : ""}
                             <a  href="./book.html?id=${encodeURIComponent(id)}">
                             <picture class="book-card__picture">
                                 ${cover}
@@ -137,10 +137,10 @@ export function printBooksFromStorage(books) {
                             ${subtitle ? `<h4 class="book-card__subtitle">${escapeHtml(subtitle)}</h4>` : ""}
                             <h4 class="book-card__author">${escapeHtml(author)}</h4>
                             <div class="book-card__buttons">
-                                <button class="book-card__btn btn btn--choose" id="updateStatusBtn" data-id="${escapeHtml(id)}">
+                                <button class="book-card__btn btn btn--choose js-update-status" data-id="${escapeHtml(id)}">
                                     Actualizar estado
                                 </button>
-                                 <button class="book-card__btn btn btn--choose" id="removeBtn" data-id="${escapeHtml(id)}">
+                                 <button class="book-card__btn btn btn--choose js-remove" data-id="${escapeHtml(id)}">
                                     Quitar de la biblioteca
                                 </button>
                             </div>

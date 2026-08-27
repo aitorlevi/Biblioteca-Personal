@@ -1,4 +1,5 @@
 const alertMessage = document.querySelector("#alertMessage");
+let hideTimeoutId = null;
 
 export function showAlert(type, messageDescription) {
     let message = null;
@@ -28,7 +29,9 @@ export function showAlert(type, messageDescription) {
     alertMessage.innerHTML = message;
 
     alertMessage.classList.add("show");
-    setTimeout(() => {
+
+    clearTimeout(hideTimeoutId);
+    hideTimeoutId = setTimeout(() => {
         alertMessage.classList.remove("show");
     }, 4000);
 }
