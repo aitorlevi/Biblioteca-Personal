@@ -12,7 +12,16 @@ form.addEventListener("submit", async (e) => {
     const title = formData.get("title");
 
     searchBooks(title)
-        .then((books) => printBooksFromSearch(books))
+        .then((books) => {
+            const resultCount = printBooksFromSearch(books);
+
+            if (resultCount === 0) {
+                showAlert(
+                    "info",
+                    "No se encontraron libros para esa búsqueda.",
+                );
+            }
+        })
         .catch((error) => {
             console.error(error);
             showAlert(

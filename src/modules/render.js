@@ -3,17 +3,20 @@ import { processBookData } from "./books.js";
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
 
 export function printBooksFromSearch(books) {
-    if (!books) {
-        return;
-    }
     const container = document.querySelector("#searchResults");
 
-    container.innerHTML = books
-        .filter(
-            (book) =>
-                book.volumeInfo.title != null &&
-                book.volumeInfo.language === "es",
-        )
+    if (!Array.isArray(books)) {
+        container.innerHTML = "";
+        return 0;
+    }
+
+    const booksToRender = books.filter(
+        (book) =>
+            book?.volumeInfo?.title != null &&
+            book.volumeInfo.language === "es",
+    );
+
+    container.innerHTML = booksToRender
         .map((book) => {
             const id = book.id;
             const title = book.volumeInfo.title;
@@ -40,6 +43,8 @@ export function printBooksFromSearch(books) {
                     </article>`;
         })
         .join("");
+
+    return booksToRender.length;
 }
 
 export function printBookInfo(book) {
@@ -257,6 +262,7 @@ function sanitizeHtml(value) {
                     return;
                 }
 
+                sanitizeNode(element);
                 while (element.firstChild) {
                     element.parentNode.insertBefore(
                         element.firstChild,

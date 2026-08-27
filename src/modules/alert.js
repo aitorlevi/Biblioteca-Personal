@@ -2,21 +2,22 @@ const alertMessage = document.querySelector("#alertMessage");
 
 export function showAlert(type, messageDescription) {
     let message = null;
+    const safeMessage = escapeHtml(messageDescription);
     switch (type) {
         case "success":
             alertMessage.classList.add("alert--success");
-            message = `<i class="fa-solid fa-circle-check"></i><span>${messageDescription}</span>`;
+            message = `<i class="fa-solid fa-circle-check"></i><span>${safeMessage}</span>`;
             break;
         case "error":
             alertMessage.classList.add("alert--error");
-            message = `<i class="fa-solid fa-circle-xmark" aria-hidden="true"></i><span>${messageDescription}</span>`;
+            message = `<i class="fa-solid fa-circle-xmark" aria-hidden="true"></i><span>${safeMessage}</span>`;
             break;
         case "info":
             alertMessage.classList.add("alert--info");
-            message = `<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>${messageDescription}</span>`;
+            message = `<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>${safeMessage}</span>`;
             break;
         default:
-            message = `<span>${messageDescription}</span>`;
+            message = `<span>${safeMessage}</span>`;
             break;
     }
     alertMessage.innerHTML = message;
@@ -25,4 +26,19 @@ export function showAlert(type, messageDescription) {
     setTimeout(() => {
         alertMessage.classList.remove("show");
     }, 4000);
+}
+
+function escapeHtml(value) {
+    const characters = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;",
+    };
+
+    return String(value ?? "").replace(
+        /[&<>"']/g,
+        (character) => characters[character],
+    );
 }

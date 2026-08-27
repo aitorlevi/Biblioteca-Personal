@@ -7,7 +7,16 @@ function getCollection() {
 
     try {
         const collection = JSON.parse(storedCollection);
-        return Array.isArray(collection) ? collection : [];
+        return Array.isArray(collection)
+            ? collection.filter(
+                  (book) =>
+                      book !== null &&
+                      typeof book === "object" &&
+                      !Array.isArray(book) &&
+                      book.id !== null &&
+                      book.id !== undefined,
+              )
+            : [];
     } catch (error) {
         console.error("La colección almacenada no es válida:", error);
         return [];
