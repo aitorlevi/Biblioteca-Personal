@@ -1,6 +1,25 @@
+function getCollection() {
+    const storedCollection = localStorage.getItem("collection");
+
+    if (!storedCollection) {
+        return [];
+    }
+
+    try {
+        const collection = JSON.parse(storedCollection);
+        return Array.isArray(collection) ? collection : [];
+    } catch (error) {
+        console.error("La colección almacenada no es válida:", error);
+        return [];
+    }
+}
+
+function saveCollection(collection) {
+    localStorage.setItem("collection", JSON.stringify(collection));
+}
+
 export function addBookToShelf(book) {
-    const currentCollection =
-        JSON.parse(localStorage.getItem("collection")) || [];
+    const currentCollection = getCollection();
 
     const isAlready = currentCollection.some(
         (savedBook) => savedBook.id === book.id,
@@ -11,14 +30,13 @@ export function addBookToShelf(book) {
     }
 
     currentCollection.push(book);
-    localStorage.setItem("collection", JSON.stringify(currentCollection));
+    saveCollection(currentCollection);
 
     return true;
 }
 
 export function removeBookFromShelf(bookId) {
-    const currentCollection =
-        JSON.parse(localStorage.getItem("collection")) || [];
+    const currentCollection = getCollection();
 
     const bookPosition = currentCollection.findIndex(
         (book) => book.id === bookId,
@@ -29,14 +47,13 @@ export function removeBookFromShelf(bookId) {
     }
 
     currentCollection.splice(bookPosition, 1);
-    localStorage.setItem("collection", JSON.stringify(currentCollection));
+    saveCollection(currentCollection);
 
     return true;
 }
 
 export function updateStatusBookFromShelf(bookId, newStatus) {
-    const currentCollection =
-        JSON.parse(localStorage.getItem("collection")) || [];
+    const currentCollection = getCollection();
 
     const bookPosition = currentCollection.findIndex(
         (book) => book.id === bookId,
@@ -47,14 +64,11 @@ export function updateStatusBookFromShelf(bookId, newStatus) {
     }
 
     currentCollection[bookPosition].status = newStatus;
-    localStorage.setItem("collection", JSON.stringify(currentCollection));
+    saveCollection(currentCollection);
 
     return true;
 }
 
 export function getBooksFromShelf() {
-    const currentCollection =
-        JSON.parse(localStorage.getItem("collection")) || [];
-
-    return currentCollection;
+    return getCollection();
 }
