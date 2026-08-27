@@ -1,6 +1,15 @@
-import { processBookData } from "./books.js";
+import { escapeHtml } from "./html.js";
+import { getStatusLabel } from "./status.js";
 
 const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
+
+export function clearSearchResults() {
+    const container = document.querySelector("#searchResults");
+
+    if (container) {
+        container.innerHTML = "";
+    }
+}
 
 export function printBooksFromSearch(books) {
     const container = document.querySelector("#searchResults");
@@ -47,18 +56,17 @@ export function printBooksFromSearch(books) {
     return booksToRender.length;
 }
 
-export function printBookInfo(book) {
-    if (!book) {
+export function printBookInfo(processedBook) {
+    if (!processedBook) {
         return;
     }
     const container = document.querySelector("#bookInfo");
-
-    const processedBook = processBookData(book);
 
     const image = setImages(
         setSecuredImages(processedBook.imageLinks),
         processedBook.title,
         "book-info__image",
+        "eager",
     );
 
     const pageTitle = document.querySelector("#pageTitle");
@@ -123,7 +131,7 @@ export function printBooksFromStorage(books) {
                 book.title,
                 "book-card__image",
             );
-            const statusLabel = printStatus(book.status);
+            const statusLabel = getStatusLabel(book.status);
 
             return `<article class="book-card" data-id="${escapeHtml(id)}">
                         <div class="book-card__link">
@@ -150,7 +158,7 @@ export function printBooksFromStorage(books) {
         .join("");
 }
 
-function setImages(imageLinks, title, extraClases) {
+function setImages(imageLinks, title, extraClases, loading = "lazy") {
     const getImageUrl = (...sources) =>
         sources.map(getSafeImageUrl).find(Boolean) ?? DEFAULT_BOOK_COVER;
     const largeSrc = getImageUrl(
@@ -174,20 +182,9 @@ function setImages(imageLinks, title, extraClases) {
             src="${escapeHtml(defaultSrc)}" 
             class="img${extraClases ? ` ${escapeHtml(extraClases)}` : ""}"
             alt="Portada de ${escapeHtml(title)}"
-            title="${escapeHtml(title)}" 
-            loading="eager"
+            title="${escapeHtml(title)}"
+            loading="${loading}"
             >`;
-}
-
-function printStatus(status) {
-    const statusMap = {
-        pending: "Pendiente",
-        inProgress: "Leyendo",
-        read: "Leído",
-        notFinished: "Sin terminar",
-    };
-
-    return statusMap[status] ?? null;
 }
 
 function setSecuredImages(images) {
@@ -212,21 +209,6 @@ function getSafeImageUrl(value) {
 
     const securedValue = value.replace("http://", "https://");
     return /^https:\/\//i.test(securedValue) ? securedValue : null;
-}
-
-function escapeHtml(value) {
-    const characters = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;",
-    };
-
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        (character) => characters[character],
-    );
 }
 
 function sanitizeHtml(value) {
@@ -289,7 +271,9 @@ function sanitizeHtml(value) {
                     url = null;
                 }
 
-                if (!url || !["http:", "https:"].includes(url.protocol)) {
+                const allowedProtocols = ["http:", "https:", "mailto:", "tel:"];
+
+                if (!url || !allowedProtocols.includes(url.protocol)) {
                     element.removeAttribute("href");
                 }
             }

@@ -2,7 +2,7 @@ const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 import { GOOGLE_BOOKS_API_KEY } from "./config.js";
 
 export class Book {
-    constructor(
+    constructor({
         id,
         title,
         subtitle = null,
@@ -12,7 +12,7 @@ export class Book {
         publishedDate = null,
         publisher = null,
         status = null,
-    ) {
+    }) {
         this.id = id;
         this.title = title;
         this.subtitle = subtitle;
@@ -23,21 +23,21 @@ export class Book {
         this.publisher = publisher;
         this.status = status;
         this.rating = null;
-        this.dataAdded = new Date().toISOString();
+        this.dateAdded = new Date().toISOString();
     }
 
     static createFromGoogleBooks(data, status = null) {
-        return new Book(
-            data.id,
-            data.title,
-            data.subtitle,
-            data.author,
-            data.isbn,
-            data.imageLinks,
-            data.publishedDate,
-            data.publisher,
+        return new Book({
+            id: data.id,
+            title: data.title,
+            subtitle: data.subtitle,
+            author: data.author,
+            isbn: data.isbn,
+            cover: data.imageLinks,
+            publishedDate: data.publishedDate,
+            publisher: data.publisher,
             status,
-        );
+        });
     }
 }
 
@@ -86,6 +86,14 @@ export function processBookData(rawData) {
     const identifiers = volumeInfo.industryIdentifiers ?? [];
     const listPrice = saleInfo.listPrice;
 
+    const findIdentifier = (type) =>
+        identifiers.find((entry) => entry?.type === type)?.identifier ?? null;
+    const isbn =
+        findIdentifier("ISBN_13") ??
+        findIdentifier("ISBN_10") ??
+        identifiers[0]?.identifier ??
+        null;
+
     return {
         id: rawData.id,
         title: volumeInfo.title ?? "Título desconocido",
@@ -100,7 +108,7 @@ export function processBookData(rawData) {
                     ? `${listPrice.amount} ${listPrice.currencyCode === "EUR" ? "€" : "- moneda desconocida"}`
                     : "Precio no disponible"
                 : "No está a la venta",
-        isbn: identifiers[1]?.identifier ?? identifiers[0]?.identifier ?? null,
+        isbn,
         publishedDate: volumeInfo.publishedDate ?? null,
         publisher: volumeInfo.publisher ?? null,
         pageCount: volumeInfo.pageCount ?? null,

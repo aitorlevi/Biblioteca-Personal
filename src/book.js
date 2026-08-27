@@ -6,20 +6,21 @@ import {
     openUpdateStatusOverlay,
 } from "./modules/overlay.js";
 import { printBookInfo } from "./modules/render.js";
+import { isValidStatus } from "./modules/status.js";
 import { addBookToShelf } from "./modules/storage.js";
 
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 const bookInfoContainer = document.querySelector("#bookInfo");
 const overlay = document.querySelector("#overlayStatus");
-let currentRawData = null;
+let currentBook = null;
 
 if (id) {
     showLoader();
     getBook(id)
-        .then((book) => {
-            currentRawData = processBookData(book);
-            printBookInfo(book);
+        .then((rawBook) => {
+            currentBook = processBookData(rawBook);
+            printBookInfo(currentBook);
         })
         .catch((error) => {
             console.error(error);
@@ -36,17 +37,15 @@ if (id) {
 }
 
 function addStatus(status) {
-    const validStatuses = ["pending", "inProgress", "read", "notFinished"];
-
-    if (!validStatuses.includes(status)) {
+    if (!isValidStatus(status)) {
         return { ok: false, reason: "invalidStatus" };
     }
 
-    if (!currentRawData) {
+    if (!currentBook) {
         return { ok: false, reason: "noData" };
     }
 
-    const book = Book.createFromGoogleBooks(currentRawData, status);
+    const book = Book.createFromGoogleBooks(currentBook, status);
 
     if (!addBookToShelf(book)) {
         return { ok: false, reason: "duplicate" };
@@ -55,7 +54,7 @@ function addStatus(status) {
     return { ok: true };
 }
 
-overlay.querySelectorAll("[data-status]").forEach((button) => {
+overlay?.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         const result = addStatus(button.dataset.status);
 
@@ -74,7 +73,7 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
     });
 });
 
-bookInfoContainer.addEventListener("click", (event) => {
+bookInfoContainer?.addEventListener("click", (event) => {
     if (event.target && event.target.matches("#addToLibraryBtn")) {
         openUpdateStatusOverlay();
     }

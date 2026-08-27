@@ -12,6 +12,7 @@ import {
 } from "./modules/overlay.js";
 import { showAlert } from "./modules/alert.js";
 import { hideLoader, showLoader } from "./modules/loader.js";
+import { isValidStatus } from "./modules/status.js";
 
 const bookShelfContainer = document.querySelector("#bookShelf");
 const overlay = document.querySelector("#overlayStatus");
@@ -33,9 +34,7 @@ function showBooks() {
 }
 
 function updateStatus(status) {
-    const validStatuses = ["pending", "inProgress", "read", "notFinished"];
-
-    if (!validStatuses.includes(status)) {
+    if (!isValidStatus(status)) {
         console.error("Estado no disponible");
         return false;
     }
@@ -43,7 +42,7 @@ function updateStatus(status) {
     return updateStatusBookFromShelf(targetBook, status);
 }
 
-bookShelfContainer.addEventListener("click", (event) => {
+bookShelfContainer?.addEventListener("click", (event) => {
     if (event.target && event.target.matches(".js-update-status")) {
         targetBook = event.target.dataset.id;
         openUpdateStatusOverlay();
@@ -53,7 +52,7 @@ bookShelfContainer.addEventListener("click", (event) => {
     }
 });
 
-overlay.querySelectorAll("[data-status]").forEach((button) => {
+overlay?.querySelectorAll("[data-status]").forEach((button) => {
     button.addEventListener("click", () => {
         if (updateStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
@@ -65,8 +64,8 @@ overlay.querySelectorAll("[data-status]").forEach((button) => {
     });
 });
 
-btnCloseRemoveOverlay.addEventListener("click", closeRemoveBookOverlay);
-btnConfirmRemove.addEventListener("click", () => {
+btnCloseRemoveOverlay?.addEventListener("click", closeRemoveBookOverlay);
+btnConfirmRemove?.addEventListener("click", () => {
     showLoader();
     if (removeBookFromShelf(targetBook)) {
         closeRemoveBookOverlay();

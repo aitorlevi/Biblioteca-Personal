@@ -1,13 +1,14 @@
 import { showAlert } from "./modules/alert.js";
 import { searchBooks } from "./modules/books.js";
 import { hideLoader, showLoader } from "./modules/loader.js";
-import { printBooksFromSearch } from "./modules/render.js";
+import { clearSearchResults, printBooksFromSearch } from "./modules/render.js";
 
 const form = document.querySelector("#formSearch");
 
-form.addEventListener("submit", async (e) => {
-    showLoader();
+form?.addEventListener("submit", (e) => {
     e.preventDefault();
+    showLoader();
+
     const formData = new FormData(form);
     const title = formData.get("title");
 
@@ -24,6 +25,7 @@ form.addEventListener("submit", async (e) => {
         })
         .catch((error) => {
             console.error(error);
+            clearSearchResults();
             showAlert(
                 "error",
                 "No se ha podido realizar la búsqueda. Por favor, prueba de nuevo.",

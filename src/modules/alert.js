@@ -1,3 +1,5 @@
+import { escapeHtml } from "./html.js";
+
 const alertMessage = document.querySelector("#alertMessage");
 let hideTimeoutId = null;
 
@@ -34,19 +36,4 @@ export function showAlert(type, messageDescription) {
     hideTimeoutId = setTimeout(() => {
         alertMessage.classList.remove("show");
     }, 4000);
-}
-
-function escapeHtml(value) {
-    const characters = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;",
-    };
-
-    return String(value ?? "").replace(
-        /[&<>"']/g,
-        (character) => characters[character],
-    );
 }
