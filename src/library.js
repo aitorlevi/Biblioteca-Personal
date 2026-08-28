@@ -57,6 +57,7 @@ overlay?.querySelectorAll("[data-status]").forEach((button) => {
         if (updateStatus(button.dataset.status)) {
             closeUpdateStatusOverlay();
             showBooks();
+            bookShelfContainer?.focus();
             showAlert("success", "Estado actualizado con éxito.");
         } else {
             showAlert("error", "No se ha podido actualizar el estado.");
@@ -70,6 +71,7 @@ btnConfirmRemove?.addEventListener("click", () => {
     if (removeBookFromShelf(targetBook)) {
         closeRemoveBookOverlay();
         showBooks();
+        bookShelfContainer?.focus();
         showAlert("success", "Libro eliminado de la biblioteca.");
     } else {
         showAlert("error", "No se ha podido eliminar el libro.");

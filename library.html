@@ -30,19 +30,33 @@
             </header>
             <main class="main-content">
                 <div class="container">
-                    <section id="bookShelf" class="book-shelf"></section>
+                    <section
+                        id="bookShelf"
+                        class="book-shelf"
+                        aria-label="Tu biblioteca"
+                        tabindex="-1"
+                    ></section>
                 </div>
-                <div id="overlayStatus" class="overlay">
-                    <div class="overlay__modal">
+                <div
+                    id="overlayStatus"
+                    class="overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="overlayStatusTitle"
+                >
+                    <div class="overlay__modal" tabindex="-1">
                         <button
                             id="overlayStatusCloseBtn"
                             class="overlay__close"
+                            aria-label="Cerrar"
                         >
                             <svg class="icon" aria-hidden="true">
                                 <use href="./public/icons/icons.svg#close" />
                             </svg>
                         </button>
-                        <h4 class="overlay__title">Selecciona el estado:</h4>
+                        <h4 id="overlayStatusTitle" class="overlay__title">
+                            Selecciona el estado:
+                        </h4>
                         <div class="overlay__buttons">
                             <button
                                 type="button"
@@ -75,17 +89,24 @@
                         </div>
                     </div>
                 </div>
-                <div id="overlayRemove" class="overlay">
-                    <div class="overlay__modal">
+                <div
+                    id="overlayRemove"
+                    class="overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="overlayRemoveTitle"
+                >
+                    <div class="overlay__modal" tabindex="-1">
                         <button
                             id="overlayRemoveCloseBtn"
                             class="overlay__close"
+                            aria-label="Cerrar"
                         >
                             <svg class="icon" aria-hidden="true">
                                 <use href="./public/icons/icons.svg#close" />
                             </svg>
                         </button>
-                        <h4 class="overlay__title">
+                        <h4 id="overlayRemoveTitle" class="overlay__title">
                             ¿Seguro que quieres quitar el libro de la
                             biblioteca?
                         </h4>
@@ -107,12 +128,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert" id="alertMessage"></div>
+                <div
+                    class="alert"
+                    id="alertMessage"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                ></div>
             </main>
             <footer class="main-footer">
                 <div class="container">aitorlevi.com</div>
             </footer>
-            <div class="loader" id="loader">
+            <div
+                class="loader"
+                id="loader"
+                role="status"
+                aria-label="Cargando"
+            >
                 <span class="spinner"></span>
             </div>
         </div>

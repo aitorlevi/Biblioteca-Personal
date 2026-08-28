@@ -294,6 +294,10 @@ label {
     gap: var(--spacing-md);
     margin-top: var(--spacing-lg);
     align-items: stretch;
+
+    &:focus {
+        outline: none;
+    }
 }
 
 .book-card {
@@ -493,6 +497,10 @@ label {
         opacity: 1;
         margin: 100px auto;
         border-radius: var(--radius-lg);
+
+        &:focus {
+            outline: none;
+        }
     }
 
     .overlay__close {

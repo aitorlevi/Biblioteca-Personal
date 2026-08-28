@@ -38,14 +38,26 @@
                     <section
                         id="searchResults"
                         class="search-results"
+                        aria-label="Resultados de búsqueda"
                     ></section>
                 </div>
-                <div class="alert" id="alertMessage"></div>
+                <div
+                    class="alert"
+                    id="alertMessage"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                ></div>
             </main>
             <footer class="main-footer">
                 <div class="container">aitorlevi.com</div>
             </footer>
-            <div class="loader" id="loader">
+            <div
+                class="loader"
+                id="loader"
+                role="status"
+                aria-label="Cargando"
+            >
                 <span class="spinner"></span>
             </div>
         </div>

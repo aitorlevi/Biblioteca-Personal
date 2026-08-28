@@ -26,21 +26,34 @@
             </header>
             <main class="main-content">
                 <div class="container">
-                    <section id="bookInfo" class="book-info">
+                    <section
+                        id="bookInfo"
+                        class="book-info"
+                        aria-label="Información del libro"
+                    >
                         <!-- TODO VALORACIONES -->
                     </section>
                 </div>
-                <div id="overlayStatus" class="overlay">
-                    <div class="overlay__modal">
+                <div
+                    id="overlayStatus"
+                    class="overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="overlayStatusTitle"
+                >
+                    <div class="overlay__modal" tabindex="-1">
                         <button
                             id="overlayStatusCloseBtn"
                             class="overlay__close"
+                            aria-label="Cerrar"
                         >
                             <svg class="icon" aria-hidden="true">
                                 <use href="./public/icons/icons.svg#close" />
                             </svg>
                         </button>
-                        <h4 class="overlay__title">Selecciona el estado:</h4>
+                        <h4 id="overlayStatusTitle" class="overlay__title">
+                            Selecciona el estado:
+                        </h4>
                         <div class="overlay__buttons">
                             <button
                                 type="button"
@@ -73,12 +86,23 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert" id="alertMessage"></div>
+                <div
+                    class="alert"
+                    id="alertMessage"
+                    role="status"
+                    aria-live="polite"
+                    aria-atomic="true"
+                ></div>
             </main>
             <footer class="main-footer">
                 <div class="container">aitorlevi.com</div>
             </footer>
-            <div class="loader" id="loader">
+            <div
+                class="loader"
+                id="loader"
+                role="status"
+                aria-label="Cargando"
+            >
                 <span class="spinner"></span>
             </div>
         </div>
