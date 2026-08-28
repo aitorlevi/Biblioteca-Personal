@@ -1,5 +1,35 @@
-const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
 import { GOOGLE_BOOKS_API_KEY } from "./config.js";
+
+const BASE_URL = "https://www.googleapis.com/books/v1/volumes";
+const SEARCH_PARAMS = { langRestrict: "es", maxResults: "20" };
+
+function booksUrl(path = "", params = {}) {
+    const url = new URL(BASE_URL + path);
+
+    for (const [name, value] of Object.entries({
+        ...params,
+        key: GOOGLE_BOOKS_API_KEY,
+    })) {
+        url.searchParams.set(name, value);
+    }
+
+    return url;
+}
+
+async function requestJson(url, errorContext) {
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`Error en la petición ${response.status}`);
+        }
+
+        return await response.json();
+    } catch (error) {
+        console.error(errorContext, error);
+        throw error;
+    }
+}
 
 export class Book {
     constructor({
@@ -42,42 +72,19 @@ export class Book {
 }
 
 export async function searchBooks(title) {
-    const url = `${BASE_URL}?q=${encodeURIComponent(title)}&langRestrict=es&maxResults=20&key=${GOOGLE_BOOKS_API_KEY}`;
-    try {
-        const response = await fetch(url);
+    const url = booksUrl("", { q: title, ...SEARCH_PARAMS });
+    const data = await requestJson(url, "Hubo un problema con la búsqueda:");
 
-        if (!response.ok) {
-            throw new Error(`Error en la petición ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        return data.items;
-    } catch (error) {
-        console.error("Hubo un problema con la búsqueda:", error);
-        throw error;
-    }
+    return data.items;
 }
 
 export async function getBook(id) {
-    const url = `${BASE_URL}/${id}?key=${GOOGLE_BOOKS_API_KEY}`;
-    try {
-        const response = await fetch(url);
+    const url = booksUrl(`/${encodeURIComponent(id)}`);
 
-        if (!response.ok) {
-            throw new Error(`Error en la petición ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        return data;
-    } catch (error) {
-        console.error(
-            "Hubo un problema al cargar la información del libro: ",
-            error,
-        );
-        throw error;
-    }
+    return requestJson(
+        url,
+        "Hubo un problema al cargar la información del libro:",
+    );
 }
 
 export function processBookData(rawData) {
