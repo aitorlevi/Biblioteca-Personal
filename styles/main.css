@@ -190,6 +190,18 @@ select {
     margin: 0 auto;
 }
 
+/* ----- ICON ----- */
+
+.icon {
+    width: 1em;
+    height: 1em;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
 /* ----- BUTTON ----- */
 
 .btn {
@@ -491,6 +503,10 @@ label {
         border: none;
         background: none;
         cursor: pointer;
+
+        .icon {
+            display: block;
+        }
     }
 
     .overlay__title {
@@ -538,15 +554,17 @@ label {
         pointer-events: auto;
     }
 
-    i {
-        font-size: var(--font-size-md);
+    .icon {
+        flex-shrink: 0;
+        width: 1.2em;
+        height: 1.2em;
     }
 }
 
 .alert--success {
     border-color: var(--color-success);
 
-    i {
+    .icon {
         color: var(--color-success);
     }
 }
@@ -554,7 +572,7 @@ label {
 .alert--error {
     border-color: var(--color-error);
 
-    i {
+    .icon {
         color: var(--color-error);
     }
 }
@@ -562,7 +580,7 @@ label {
 .alert--info {
     border-color: var(--color-info);
 
-    i {
+    .icon {
         color: var(--color-info);
     }
 }

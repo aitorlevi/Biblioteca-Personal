@@ -3,32 +3,30 @@ import { escapeHtml } from "./html.js";
 const alertMessage = document.querySelector("#alertMessage");
 let hideTimeoutId = null;
 
+const icon = (name) =>
+    `<svg class="icon" aria-hidden="true"><use href="./public/icons/icons.svg#${name}"></use></svg>`;
+
+const ALERT_TYPES = {
+    success: { modifier: "alert--success", icon: icon("alert-success") },
+    error: { modifier: "alert--error", icon: icon("alert-error") },
+    info: { modifier: "alert--info", icon: icon("alert-info") },
+};
+
 export function showAlert(type, messageDescription) {
-    let message = null;
     const safeMessage = escapeHtml(messageDescription);
+    const config = ALERT_TYPES[type] ?? null;
+
     alertMessage.classList.remove(
         "alert--success",
         "alert--error",
         "alert--info",
     );
-    switch (type) {
-        case "success":
-            alertMessage.classList.add("alert--success");
-            message = `<i class="fa-solid fa-circle-check"></i><span>${safeMessage}</span>`;
-            break;
-        case "error":
-            alertMessage.classList.add("alert--error");
-            message = `<i class="fa-solid fa-circle-xmark" aria-hidden="true"></i><span>${safeMessage}</span>`;
-            break;
-        case "info":
-            alertMessage.classList.add("alert--info");
-            message = `<i class="fa-solid fa-circle-info" aria-hidden="true"></i><span>${safeMessage}</span>`;
-            break;
-        default:
-            message = `<span>${safeMessage}</span>`;
-            break;
+
+    if (config) {
+        alertMessage.classList.add(config.modifier);
     }
-    alertMessage.innerHTML = message;
+
+    alertMessage.innerHTML = `${config?.icon ?? ""}<span>${safeMessage}</span>`;
 
     alertMessage.classList.add("show");
 

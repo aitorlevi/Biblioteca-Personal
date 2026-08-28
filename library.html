@@ -10,10 +10,6 @@
             type="image/x-icon"
         />
         <link rel="stylesheet" href="./styles/main.css" />
-        <link
-            rel="stylesheet"
-            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        />
         <script type="module" src="./src/library.js"></script>
     </head>
     <body>
@@ -42,7 +38,9 @@
                             id="overlayStatusCloseBtn"
                             class="overlay__close"
                         >
-                            <i class="fa-solid fa-xmark"></i>
+                            <svg class="icon" aria-hidden="true">
+                                <use href="./public/icons/icons.svg#close" />
+                            </svg>
                         </button>
                         <h4 class="overlay__title">Selecciona el estado:</h4>
                         <div class="overlay__buttons">
@@ -83,7 +81,9 @@
                             id="overlayRemoveCloseBtn"
                             class="overlay__close"
                         >
-                            <i class="fa-solid fa-xmark"></i>
+                            <svg class="icon" aria-hidden="true">
+                                <use href="./public/icons/icons.svg#close" />
+                            </svg>
                         </button>
                         <h4 class="overlay__title">
                             ¿Seguro que quieres quitar el libro de la
