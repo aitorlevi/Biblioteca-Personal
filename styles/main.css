@@ -1,21 +1,27 @@
 :root {
-    /* Colors */
-    --color-primary: #854f6c;
-    --color-background: #fbe4d8;
-    --color-background-soft: #f8f1ed;
-    --color-background-soft-opacity: #f8f1ed9f;
-    --color-background-secondary: #dfb6b2;
-    --color-text: #190019;
+    /* Marca */
+    --color-primary: #854f6c; /* Cabecera, pie, identidad */
+    --color-on-primary: #fdeee6; /* Texto sobre --color-primary */
 
-    --color-accent-primary: #2b124c;
-    --color-accent-secondary: #522b5b;
+    /* Acción */
+    --color-accent: #2b124c; /* Botones primarios y bordes de acción */
+    --color-accent-hover: #522b5b; /* Hover / activo de la acción */
+    --color-on-accent: #ffffff; /* Texto sobre acento y fondos oscuros */
 
-    --color-white: #ffffff;
-    --color-black: #000000;
-    --color-alert: #2b2b2b;
-    --color-success: #10c03c;
-    --color-error: #c92222;
-    --color-info: #1c7cdb;
+    /* Superficies */
+    --color-bg: #fbe4d8; /* Fondo de página */
+    --color-surface: #dfb6b2; /* Tarjetas, formulario, paneles */
+    --color-surface-inset: #f8f1ed; /* Zonas embutidas: campos de formulario */
+
+    /* Texto */
+    --color-text: #190019; /* Texto principal */
+    --color-text-muted: #5a3c4b; /* Etiquetas y texto secundario */
+
+    /* Estado (solo iconos y borde de la alerta) */
+    --color-alert: #241a22; /* Fondo del toast (carbón aciruelado) */
+    --color-success: #1f9d57;
+    --color-error: #c0392b;
+    --color-info: #2f7fb8;
 
     /* Typography */
     --font-main:
@@ -53,10 +59,8 @@
 
     /* Transitions */
     --transition-fast: all 0.2s ease-in-out;
-    --transition-normal: all 0.3s ease;
 
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 rgba(17, 24, 39, 0.05); /* Ideal para botones o inputs del buscador */
     --shadow-md:
         0 4px 6px -1px rgba(17, 24, 39, 0.07),
         0 2px 4px -2px rgba(17, 24, 39, 0.05); /* Ideal para las tarjetas de los libros (cards) */
@@ -75,7 +79,7 @@ html,
 body {
     font-family: var(--font-main);
     font-size: 16px;
-    background-color: var(--color-background);
+    background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.4;
 }
@@ -155,7 +159,7 @@ select {
 .main-header {
     grid-row: 1;
     background-color: var(--color-primary);
-    color: var(--color-white);
+    color: var(--color-on-primary);
     padding: var(--spacing-md) var(--spacing-lg);
     display: flex;
     justify-content: space-between;
@@ -179,7 +183,7 @@ select {
 .main-footer {
     grid-row: 3;
     background-color: var(--color-primary);
-    color: var(--color-background);
+    color: var(--color-on-primary);
     text-align: center;
     padding: var(--spacing-md);
 }
@@ -205,40 +209,66 @@ select {
 /* ----- BUTTON ----- */
 
 .btn {
-    display: inline-block;
-    background-color: var(--color-accent-primary);
-    color: var(--color-white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+    min-height: calc(var(--spacing-md) * 2.5);
     padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border: 1px solid transparent;
     border-radius: var(--radius-sm);
+    font: inherit;
+    font-weight: var(--weight-semibold);
     text-decoration: none;
-    font-weight: bold;
-    border: 1px solid var(--color-accent-primary);
-    transition: var(--transition-fast);
-    font-size: var(--font-size-base);
-    height: calc(var(--spacing-md) * 2.5);
     cursor: pointer;
+    transition: var(--transition-fast);
 }
 
 .btn:hover {
-    background-color: var(--color-accent-secondary);
+    background-color: var(--color-accent-hover);
 }
 
-.btn--choose {
+.btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Secundario: contorno */
+.btn--ghost {
     background-color: transparent;
-
-    color: var(--color-text);
-    border: 2px solid var(--color-accent-primary);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
 }
 
-.btn--choose:hover {
-    background-color: var(--color-background-secondary);
+.btn--ghost:hover {
+    background-color: color-mix(in srgb, var(--color-accent) 12%, transparent);
+}
+
+/* Destructivo */
+.btn--danger {
+    background-color: transparent;
+    color: var(--color-error);
+    border-color: var(--color-error);
+}
+
+.btn--danger:hover {
+    background-color: var(--color-error);
+    color: var(--color-on-accent);
 }
 
 /* ----- LABEL & INPUT ----- */
 
 input {
     display: inline-block;
-    background-color: var(--color-white);
+    background-color: var(--color-surface-inset);
     border: none;
     border-radius: var(--radius-sm);
     padding: var(--spacing-sm) var(--spacing-md) var(--spacing-sm)
@@ -247,12 +277,12 @@ input {
 }
 
 input:focus {
-    outline: solid var(--color-accent-secondary);
-    outline-width: 2px;
+    outline: 2px solid var(--color-accent-hover);
 }
 
 label {
     font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
 }
 
 .label-input {
@@ -269,7 +299,7 @@ label {
     font-size: calc(var(--font-size-base) * 1.5);
     text-transform: uppercase;
 
-    :hover {
+    a:hover {
         text-decoration: underline;
     }
 }
@@ -277,7 +307,7 @@ label {
 .form-container {
     max-width: 800px;
     margin: 0 auto;
-    background: var(--color-background-secondary);
+    background: var(--color-surface);
     padding: var(--spacing-lg);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
@@ -301,7 +331,7 @@ label {
 }
 
 .book-card {
-    background-color: var(--color-background-secondary);
+    background-color: var(--color-surface);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     height: 100%;
@@ -323,10 +353,10 @@ label {
             position: absolute;
             top: var(--spacing-md);
             left: var(--spacing-md);
-            background-color: var(--color-accent-secondary);
+            background-color: var(--color-accent-hover);
             border-radius: var(--radius-md);
             padding: var(--spacing-xs) var(--spacing-sm);
-            color: var(--color-background-soft);
+            color: var(--color-on-accent);
             text-transform: uppercase;
             font-weight: 600;
             font-size: var(--font-size-sm);
@@ -350,7 +380,7 @@ label {
             -webkit-line-clamp: 2;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-size: var(--spacing-md);
+            font-size: var(--font-size-base);
             margin-bottom: 0;
         }
 
@@ -361,13 +391,13 @@ label {
             -webkit-line-clamp: 2;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-size: var(--spacing-md);
+            font-size: var(--font-size-base);
             font-weight: 400;
             margin-bottom: var(--spacing-xs);
         }
 
         .book-card__author {
-            font-size: var(--spacing-md);
+            font-size: var(--font-size-base);
             font-weight: 600;
             margin-top: auto;
             margin-bottom: 0;
@@ -381,8 +411,9 @@ label {
             width: 100%;
 
             .btn {
+                min-height: auto;
+                padding: var(--spacing-xs) var(--spacing-sm);
                 font-size: var(--font-size-sm);
-                height: auto;
             }
         }
     }
@@ -426,7 +457,7 @@ label {
     }
 
     .book-info__money {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: var(--spacing-xs) var(--spacing-sm);
         border-radius: var(--radius-md);
         font-weight: var(--weight-medium);
@@ -441,7 +472,7 @@ label {
 
     .book__data,
     .book__description {
-        background-color: var(--color-background-secondary);
+        background-color: var(--color-surface);
         padding: var(--spacing-sm) var(--spacing-md);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-md);
@@ -466,8 +497,7 @@ label {
     }
 }
 
-.overlay,
-.loader {
+.overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -482,8 +512,7 @@ label {
     }
 
     .overlay__modal {
-        background-color: var(--color-background);
-        border-radius: var(--shadow-lg);
+        background-color: var(--color-bg);
         position: relative;
         top: 0;
         min-width: 280px;
@@ -529,8 +558,18 @@ label {
 }
 
 .loader {
-    z-index: 1010;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100dvw;
+    height: 100dvh;
     background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1010;
+
+    &.show {
+        display: block;
+    }
 }
 
 .alert {
@@ -541,7 +580,7 @@ label {
     min-width: 280px;
     max-width: 400px;
     background-color: var(--color-alert);
-    color: var(--color-white);
+    color: var(--color-on-accent);
     text-align: left;
     padding-block: var(--spacing-sm);
     padding-inline: var(--spacing-md) var(--spacing-xl);
@@ -599,8 +638,8 @@ label {
 
     width: var(--spinner-size);
     height: var(--spinner-size);
-    border: var(--spinner-border) solid var(--color-background);
-    border-bottom-color: var(--color-accent-primary);
+    border: var(--spinner-border) solid var(--color-bg);
+    border-bottom-color: var(--color-accent);
     border-radius: 50%;
     display: inline-block;
     box-sizing: border-box;
@@ -653,7 +692,6 @@ label {
     .search-results,
     .book-shelf {
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        padding: var(--spacing-md) 0;
     }
     .book-info {
         .book-info__image {
@@ -679,7 +717,6 @@ label {
     .search-results,
     .book-shelf {
         grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: var(--spacing-lg);
     }
 }
 

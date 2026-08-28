@@ -86,7 +86,7 @@ export function printBookInfo(processedBook) {
                                 <h5 class="book-info__price">Precio aproximado en librerías: <span class="book-info__money">${escapeHtml(processedBook.price)}</span></h5>
                             </div>
                             <div class="book-info__buttons">
-                                <button class="btn btn__primary" id="addToLibraryBtn">
+                                <button class="btn" id="addToLibraryBtn">
                                     Añadir a la biblioteca
                                 </button>
                             </div>
@@ -145,10 +145,10 @@ export function printBooksFromStorage(books) {
                             ${subtitle ? `<h4 class="book-card__subtitle">${escapeHtml(subtitle)}</h4>` : ""}
                             <h4 class="book-card__author">${escapeHtml(author)}</h4>
                             <div class="book-card__buttons">
-                                <button class="book-card__btn btn btn--choose js-update-status" data-id="${escapeHtml(id)}">
+                                <button class="btn btn--ghost js-update-status" data-id="${escapeHtml(id)}">
                                     Actualizar estado
                                 </button>
-                                 <button class="book-card__btn btn btn--choose js-remove" data-id="${escapeHtml(id)}">
+                                 <button class="btn btn--ghost js-remove" data-id="${escapeHtml(id)}">
                                     Quitar de la biblioteca
                                 </button>
                             </div>
