@@ -1,21 +1,36 @@
-function getCollection() {
-    let storedCollection = null;
+const STORAGE_KEY = "library";
+
+// Migración temporal de la clave antigua "collection" -> "library".
+// Se puede eliminar una vez que todos los clientes hayan cargado la app.
+try {
+    const legacy = localStorage.getItem("collection");
+
+    if (legacy !== null && localStorage.getItem(STORAGE_KEY) === null) {
+        localStorage.setItem(STORAGE_KEY, legacy);
+        localStorage.removeItem("collection");
+    }
+} catch (error) {
+    console.error("No se ha podido migrar la biblioteca:", error);
+}
+
+function getLibrary() {
+    let storedLibrary = null;
 
     try {
-        storedCollection = localStorage.getItem("collection");
+        storedLibrary = localStorage.getItem(STORAGE_KEY);
     } catch (error) {
         console.error("No se ha podido acceder al almacenamiento:", error);
         return [];
     }
 
-    if (!storedCollection) {
+    if (!storedLibrary) {
         return [];
     }
 
     try {
-        const collection = JSON.parse(storedCollection);
-        return Array.isArray(collection)
-            ? collection.filter(
+        const library = JSON.parse(storedLibrary);
+        return Array.isArray(library)
+            ? library.filter(
                   (book) =>
                       book !== null &&
                       typeof book === "object" &&
@@ -25,25 +40,25 @@ function getCollection() {
               )
             : [];
     } catch (error) {
-        console.error("La colección almacenada no es válida:", error);
+        console.error("La biblioteca almacenada no es válida:", error);
         return [];
     }
 }
 
-function saveCollection(collection) {
+function saveLibrary(library) {
     try {
-        localStorage.setItem("collection", JSON.stringify(collection));
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(library));
         return true;
     } catch (error) {
-        console.error("No se ha podido guardar la colección:", error);
+        console.error("No se ha podido guardar la biblioteca:", error);
         return false;
     }
 }
 
 export function addBookToShelf(book) {
-    const currentCollection = getCollection();
+    const currentLibrary = getLibrary();
 
-    const isAlready = currentCollection.some(
+    const isAlready = currentLibrary.some(
         (savedBook) => savedBook.id === book.id,
     );
 
@@ -51,43 +66,39 @@ export function addBookToShelf(book) {
         return false;
     }
 
-    currentCollection.push(book);
+    currentLibrary.push(book);
 
-    return saveCollection(currentCollection);
+    return saveLibrary(currentLibrary);
 }
 
 export function removeBookFromShelf(bookId) {
-    const currentCollection = getCollection();
+    const currentLibrary = getLibrary();
 
-    const bookPosition = currentCollection.findIndex(
-        (book) => book.id === bookId,
-    );
+    const bookPosition = currentLibrary.findIndex((book) => book.id === bookId);
 
     if (bookPosition < 0) {
         return false;
     }
 
-    currentCollection.splice(bookPosition, 1);
+    currentLibrary.splice(bookPosition, 1);
 
-    return saveCollection(currentCollection);
+    return saveLibrary(currentLibrary);
 }
 
 export function updateStatusBookFromShelf(bookId, newStatus) {
-    const currentCollection = getCollection();
+    const currentLibrary = getLibrary();
 
-    const bookPosition = currentCollection.findIndex(
-        (book) => book.id === bookId,
-    );
+    const bookPosition = currentLibrary.findIndex((book) => book.id === bookId);
 
     if (bookPosition < 0) {
         return false;
     }
 
-    currentCollection[bookPosition].status = newStatus;
+    currentLibrary[bookPosition].status = newStatus;
 
-    return saveCollection(currentCollection);
+    return saveLibrary(currentLibrary);
 }
 
 export function getBooksFromShelf() {
-    return getCollection();
+    return getLibrary();
 }

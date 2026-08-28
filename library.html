@@ -1,26 +1,35 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title id="pageTitle">AitorTeca - Biblioteca</title>
         <link
             rel="icon"
-            href="public/favicon/favicon.ico"
+            href="./public/favicon/favicon.ico"
             type="image/x-icon"
         />
-        <link rel="stylesheet" href="styles/main.css" />
+        <link rel="stylesheet" href="./styles/main.css" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         />
-        <script type="module" src="src/collection.js"></script>
+        <script type="module" src="./src/library.js"></script>
     </head>
     <body>
         <div class="app-layout">
             <header class="main-header">
-                <div class="container">
-                    <a href="/index.html"><h1>AitorTeca</h1></a>
+                <div class="main-header__container container">
+                    <a href="./index.html"><h1>AitorTeca</h1></a>
+                    <nav class="menu">
+                        <ul>
+                            <li>
+                                <a href="./library.html" aria-current="page"
+                                    >Biblioteca</a
+                                >
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
             </header>
             <main class="main-content">

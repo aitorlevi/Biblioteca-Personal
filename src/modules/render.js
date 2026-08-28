@@ -1,7 +1,7 @@
 import { escapeHtml } from "./html.js";
 import { getStatusLabel } from "./status.js";
 
-const DEFAULT_BOOK_COVER = "/public/images/image-not-found.png";
+const DEFAULT_BOOK_COVER = "./public/images/image-not-found.png";
 
 export function clearSearchResults() {
     const container = document.querySelector("#searchResults");
