@@ -3,6 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+            name="description"
+            content="Busca libros con la API de Google Books y guárdalos en tu biblioteca personal."
+        />
         <title>AitorTeca</title>
         <link
             rel="icon"
@@ -27,10 +31,17 @@
             <main class="main-content">
                 <div class="container">
                     <section id="form">
-                        <form action="" id="formSearch" class="form-container">
+                        <form id="formSearch" class="form-container">
                             <div class="label-input">
-                                <label for="title">Titulo</label>
-                                <input type="text" id="title" name="title" />
+                                <label for="title">Título</label>
+                                <input
+                                    type="search"
+                                    id="title"
+                                    name="title"
+                                    placeholder="p. ej. Cien años de soledad"
+                                    autocomplete="off"
+                                    required
+                                />
                             </div>
                             <button class="btn" type="submit">Buscar</button>
                         </form>
