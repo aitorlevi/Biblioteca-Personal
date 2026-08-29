@@ -167,7 +167,7 @@ Auth primero, luego migrar los datos.
 
 Bucket abierto, ya barato con framework + BD:
 
-- [ ] **Valoraciones** (el modelo `Book` ya tiene `rating`; ver `todo.md`). Requiere BD.
+- [ ] **Valoraciones** (el modelo `Book` ya trae un campo `rating` sin usar). Requiere BD.
 - [ ] **Filtros** (por estado, autor, género, valoración). Requiere BD para que valga la pena.
 - [ ] Más páginas (perfil, estadísticas de lectura, listas).
 - [ ] Paginación de resultados de búsqueda.
