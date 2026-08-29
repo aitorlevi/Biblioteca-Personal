@@ -1,2 +1,30 @@
+node_modules
+
+# Output
+.output
+.vercel
+.netlify
+.wrangler
+/.svelte-kit
+/build
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env
+.env
+.env.*
+!.env.example
+!.env.test
+
+# Vite
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# Copia local de la versión vanilla (el original está en el tag v0-vanilla)
+/reference
+
+# API key de Google Books — local hasta la Fase 3 (luego pasa a .env)
 config.js
-*.env
+src/lib/config.js

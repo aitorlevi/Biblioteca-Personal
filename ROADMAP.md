@@ -61,16 +61,22 @@ Uso durante la migración: `git diff v0-vanilla`, `git checkout v0-vanilla`,
 
 ## Fase 2 — Andamiar SvelteKit + portar
 
-### 2a. Andamiaje
+### 2a. Andamiaje ✅ Hecha (2026-08-29)
 
-- [ ] `npm create svelte@latest` → plantilla _Skeleton_.
-- [ ] **Decisión: TypeScript**. Recomendado sí (el proyecto va a crecer). Se puede empezar
-      en JS y migrar `<script>` por `<script lang="ts">` poco a poco.
-- [ ] **Decisión: adapter de despliegue** (`@sveltejs/adapter-vercel` / `-netlify` /
-      `-cloudflare`). Elegir ya porque condiciona env vars y funciones serverless.
-- [ ] Vitest viene incluido → dejarlo listo.
-- [ ] `main.css` → `src/app.css`, importado en `src/routes/+layout.svelte`.
-- [ ] Sprite `icons.svg` y `public/` → `static/`.
+- [x] Scaffold con `npx sv create` → template `minimal`, TypeScript, Prettier, Vitest.
+      SvelteKit 2 · Svelte 5 · Vite 8 · `adapter-auto`.
+- [x] **Decisión: TypeScript** → sí.
+- [x] **Decisión: adapter** → `adapter-auto` por ahora; el destino real se elige en la Fase 3.
+- [x] **Decisión: tests** → solo unitarios (project `server` de Vitest). Se quitó el project
+      `client` (tests de componente en Chromium vía Playwright) y sus deps; se reañade más
+      adelante con `npx sv add vitest` (ver aparcadero).
+- [x] Código vanilla movido a `reference/` (ignorado por git; el original está en `v0-vanilla`).
+- [x] Scaffold traído al repo; `.gitignore` fusionado; `package.json` → `"aitorteca"`;
+      `src/app.html` con `lang="es"`.
+- [x] Verificado: `npm run check` (0 errores), `npm run build`, `npm run dev` (HTTP 200).
+
+Pendiente en 2b: `reference/main.css` → `src/app.css`, `reference/public/` → `static/`,
+`reference/src/modules/config.js` → `src/lib/config.js`.
 
 ### 2b. Port de páginas y lógica
 
@@ -91,7 +97,6 @@ Uso durante la migración: `git diff v0-vanilla`, `git checkout v0-vanilla`,
       al sanitizador (ahora que por fin es testeable).
 - [ ] Verificar accesibilidad tras el port (roles de diálogo, live regions, foco).
 
-**Decisiones a cerrar**: TypeScript (sí/no), adapter.
 **Hecho cuando**: las 3 páginas funcionan en `npm run dev` con paridad de features. Commit.
 
 ---
@@ -177,11 +182,12 @@ Bucket abierto, ya barato con framework + BD:
 
 ## Registro de decisiones
 
-| Fecha | Decisión                  | Elección | Motivo |
-| ----- | ------------------------- | -------- | ------ |
-|       | TypeScript                |          |        |
-|       | Adapter de despliegue     |          |        |
-|       | Hosting                   |          |        |
+| Fecha      | Decisión                  | Elección                        | Motivo |
+| ---------- | ------------------------- | ------------------------------- | ------ |
+| 2026-08-29 | TypeScript                | Sí                              | El proyecto va a crecer; estándar del ecosistema |
+| 2026-08-29 | Adapter de despliegue     | `adapter-auto` (revisar Fase 3) | No comprometer el host hasta el primer deploy real |
+| 2026-08-29 | Tests                     | Solo unitarios (Vitest `server`) | Evitar el navegador de Playwright de momento; los de componente se reañaden luego |
+|            | Hosting                   |                                 |        |
 |       | Modelo de Anthropic       |          |        |
 |       | Feature de IA de arranque |          |        |
 |       | Enfoque de auth           |          |        |
@@ -193,6 +199,8 @@ Bucket abierto, ya barato con framework + BD:
 - Open Graph / metadatos para compartir.
 - PWA / offline.
 - Import/export de la biblioteca.
+- Tests de componente (`.svelte`) en navegador: `npx sv add vitest` reañade el project
+  `client` + Playwright/Chromium. Se quitó en 2a para no arrastrar la descarga del navegador.
 - Tests E2E (Playwright).
 - i18n (ahora todo en español).
 - Componetizar de verdad si el HTML repetido vuelve a molestar (Astro-style islands N/A ya con SvelteKit).
