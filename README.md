@@ -18,11 +18,11 @@ ES, sin dependencias ni build). El plan de evolución está en [`ROADMAP.md`](RO
 
 ## Páginas
 
-| Archivo | Entrada JS | Para qué |
-|---|---|---|
-| `index.html` | `src/app.js` | Búsqueda |
-| `book.html` | `src/book.js` | Ficha de un libro (`?id=<volumeId>`) |
-| `library.html` | `src/library.js` | Biblioteca guardada |
+| Archivo        | Entrada JS       | Para qué                             |
+| -------------- | ---------------- | ------------------------------------ |
+| `index.html`   | `src/app.js`     | Búsqueda                             |
+| `book.html`    | `src/book.js`    | Ficha de un libro (`?id=<volumeId>`) |
+| `library.html` | `src/library.js` | Biblioteca guardada                  |
 
 ## Puesta en marcha
 
@@ -32,11 +32,11 @@ ES, sin dependencias ni build). El plan de evolución está en [`ROADMAP.md`](RO
 
 ```js
 // src/modules/config.js
-export const GOOGLE_BOOKS_API_KEY = "TU_API_KEY";
+export const GOOGLE_BOOKS_API_KEY = 'TU_API_KEY';
 ```
 
 Se obtiene en [Google Cloud Console](https://console.cloud.google.com/) activando la
-*Books API*. Conviene restringir la clave por *HTTP referrer* a tu dominio.
+_Books API_. Conviene restringir la clave por _HTTP referrer_ a tu dominio.
 
 ### 2. Servir por HTTP
 
@@ -49,7 +49,7 @@ python -m http.server 8000
 npx serve
 ```
 
-Luego abre `http://localhost:8000`. En VS Code también sirve la extensión *Live Server*.
+Luego abre `http://localhost:8000`. En VS Code también sirve la extensión _Live Server_.
 
 ## Estructura
 

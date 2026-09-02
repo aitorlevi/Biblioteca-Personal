@@ -138,10 +138,10 @@ A partir de aquí, cada fase termina con deploy.
 - [ ] **Decisión: modelo.** `claude-haiku-4-5` ($1/$5 por millón) o `claude-sonnet-5`
       ($2/$10) para presupuesto de hobby; `claude-opus-5` ($5/$25) si hace falta más.
 - [ ] Elegir **una** feature de arranque:
-    - "¿De qué trata este libro sin spoilers?" (resumen de la sinopsis)
-    - "Recomiéndame libros similares a este" (a partir de los metadatos)
-    - Búsqueda en lenguaje natural sobre la biblioteca ("novelas cortas de ci-fi que ya leí")
-    - Resumen de gustos a partir de la biblioteca guardada
+  - "¿De qué trata este libro sin spoilers?" (resumen de la sinopsis)
+  - "Recomiéndame libros similares a este" (a partir de los metadatos)
+  - Búsqueda en lenguaje natural sobre la biblioteca ("novelas cortas de ci-fi que ya leí")
+  - Resumen de gustos a partir de la biblioteca guardada
 - [ ] Nunca llamar a Anthropic desde el navegador en producción.
 
 **Decisiones a cerrar**: modelo, feature de arranque.
@@ -190,17 +190,17 @@ Bucket abierto, ya barato con framework + BD:
 
 ## Registro de decisiones
 
-| Fecha      | Decisión                  | Elección                        | Motivo |
-| ---------- | ------------------------- | ------------------------------- | ------ |
-| 2026-08-29 | TypeScript                | Sí                              | El proyecto va a crecer; estándar del ecosistema |
-| 2026-08-29 | Adapter de despliegue     | `adapter-auto` (revisar Fase 3) | No comprometer el host hasta el primer deploy real |
+| Fecha      | Decisión                  | Elección                         | Motivo                                                                            |
+| ---------- | ------------------------- | -------------------------------- | --------------------------------------------------------------------------------- |
+| 2026-08-29 | TypeScript                | Sí                               | El proyecto va a crecer; estándar del ecosistema                                  |
+| 2026-08-29 | Adapter de despliegue     | `adapter-auto` (revisar Fase 3)  | No comprometer el host hasta el primer deploy real                                |
 | 2026-08-29 | Tests                     | Solo unitarios (Vitest `server`) | Evitar el navegador de Playwright de momento; los de componente se reañaden luego |
-|            | Hosting                   |                                 |        |
-|       | Modelo de Anthropic       |          |        |
-|       | Feature de IA de arranque |          |        |
-|       | Enfoque de auth           |          |        |
-|       | BD + hosting de BD        |          |        |
-|       | ORM                       |          |        |
+|            | Hosting                   |                                  |                                                                                   |
+|            | Modelo de Anthropic       |                                  |                                                                                   |
+|            | Feature de IA de arranque |                                  |                                                                                   |
+|            | Enfoque de auth           |                                  |                                                                                   |
+|            | BD + hosting de BD        |                                  |                                                                                   |
+|            | ORM                       |                                  |                                                                                   |
 
 ## Aparcadero (ideas sin fecha)
 
@@ -222,8 +222,8 @@ Bucket abierto, ya barato con framework + BD:
 - Todo pasa por `POST /v1/messages`. SDK: `@anthropic-ai/sdk`, **solo en servidor**.
 - Streaming hacia el navegador (SSE) para UX de chat.
 - Modelos y precio ($ por millón de tokens in / out):
-    - `claude-haiku-4-5` — 1 / 5
-    - `claude-sonnet-5` — 2 / 10
-    - `claude-opus-5` — 5 / 25
+  - `claude-haiku-4-5` — 1 / 5
+  - `claude-sonnet-5` — 2 / 10
+  - `claude-opus-5` — 5 / 25
 - La key va sin prefijo `PUBLIC_` / `VITE_` (esos se envían al cliente).
 - Existe `anthropic-dangerous-direct-browser-access`, pero expone la key → solo prototipos.
