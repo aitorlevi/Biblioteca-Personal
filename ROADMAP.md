@@ -96,6 +96,14 @@ Pendiente en 2b: `reference/main.css` → `src/app.css`, `reference/public/` →
 - [ ] Portar la lógica pura a `src/lib/` y **añadir tests Vitest** a `processBookData` y
       al sanitizador (ahora que por fin es testeable).
 - [ ] Verificar accesibilidad tras el port (roles de diálogo, live regions, foco).
+- [ ] `README.md` → reescribir para SvelteKit (ahora describe el sitio vanilla).
+- [ ] Crear **`CLAUDE.md`** (commiteado): comandos (`dev`/`check`/`build`/`test`),
+      arquitectura ya estable (rutas, `$lib`, flujo de datos), y las convenciones de
+      trabajo — commits/push e instalaciones los hace el usuario; `reference/` es copia
+      local ignorada (original en `v0-vanilla`); `ROADMAP.md` es la fuente de verdad.
+      Se hace **al final de la 2b**, no antes (la estructura cambia mucho durante el port).
+      Motivo de commitearlo: las notas de memoria cuelgan de la ruta de la carpeta y no
+      sobreviven a un rename; `CLAUDE.md` viaja con el repo.
 
 **Hecho cuando**: las 3 páginas funcionan en `npm run dev` con paridad de features. Commit.
 
@@ -204,6 +212,10 @@ Bucket abierto, ya barato con framework + BD:
 - Tests E2E (Playwright).
 - i18n (ahora todo en español).
 - Componetizar de verdad si el HTML repetido vuelve a molestar (Astro-style islands N/A ya con SvelteKit).
+- Config de Claude en el repo: skill de **deploy** cuando la Fase 3 fije el hosting;
+  allowlist de permisos en `.claude/settings.json` para comandos de solo lectura
+  (`npm run check`, `git status/diff/log`) vía `/fewer-permission-prompts`. Los agentes
+  no aplican a este proyecto. (El `CLAUDE.md` en sí está en la Fase 2b.)
 
 ## Referencia rápida — Anthropic
 
